@@ -1,0 +1,15 @@
+{
+  "name": "nayi-samakhya-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:matrimony": "npm run dev --workspace=apps/matrimony",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:matrimony": "npm run build --workspace=apps/matrimony",
+    "test:matrimony": "npm test --workspace=apps/matrimony"
+  }
+}
