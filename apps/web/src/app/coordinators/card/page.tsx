@@ -7,5 +7,3 @@ import { redirect } from "next/navigation";
 export default function CoordinatorsCardAliasPage() {
   redirect("/coordinator-card");
 }
-
-export const runtime = 'edge';

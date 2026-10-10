@@ -120,5 +120,3 @@ async function syncBulletins(req: NextRequest) {
     errors: errors.slice(0, 8),
   });
 }
-
-export const runtime = 'edge';

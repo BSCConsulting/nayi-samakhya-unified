@@ -19,5 +19,3 @@ export default function SalonHubProcurePage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

@@ -67,5 +67,3 @@ export default function MandalsPage() {
     </section>
   );
 }
-
-export const runtime = 'edge';

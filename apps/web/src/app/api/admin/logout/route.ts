@@ -39,5 +39,3 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   return clearSessionAndRespond(request);
 }
-
-export const runtime = 'edge';

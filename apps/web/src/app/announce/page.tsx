@@ -14,5 +14,3 @@ export default async function CommunityAnnouncePage({
   // Server-passed blast — no useSearchParams, so no CSR bailout / stuck loader.
   return <AnnounceHub initialBlast={initialBlast} />;
 }
-
-export const runtime = 'edge';

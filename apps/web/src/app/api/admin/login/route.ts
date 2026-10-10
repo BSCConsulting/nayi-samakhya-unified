@@ -64,5 +64,3 @@ export async function POST(request: Request) {
   });
   return response;
 }
-
-export const runtime = 'edge';

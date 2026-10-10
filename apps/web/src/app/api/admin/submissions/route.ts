@@ -326,5 +326,3 @@ export async function PATCH(req: NextRequest) {
     );
   }
 }
-
-export const runtime = 'edge';

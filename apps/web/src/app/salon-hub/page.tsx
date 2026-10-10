@@ -159,5 +159,3 @@ export default function SalonHubPage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

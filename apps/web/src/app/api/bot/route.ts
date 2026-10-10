@@ -3,5 +3,3 @@
  * Live Telegram webhook remains `/api/telegram-webhook` (secret-token verified).
  */
 export { GET, POST } from "../telegram-webhook/route";
-
-export const runtime = 'edge';

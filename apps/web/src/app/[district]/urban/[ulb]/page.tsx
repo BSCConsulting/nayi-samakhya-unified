@@ -18,5 +18,3 @@ export default async function UrbanUlbRedirectPage({ params }: Props) {
 
   redirect(`/${district.trim().toLowerCase()}/${canonical}`);
 }
-
-export const runtime = 'edge';

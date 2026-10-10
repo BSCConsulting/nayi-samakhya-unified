@@ -66,5 +66,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ ok: true, persisted: true, docket_id: docketId });
 }
-
-export const runtime = 'edge';

@@ -186,4 +186,3 @@ export default async function MandalDeskPage({ params }: Props) {
     </div>
   );
 }
-

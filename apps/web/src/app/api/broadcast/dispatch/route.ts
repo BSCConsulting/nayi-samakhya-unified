@@ -264,5 +264,3 @@ export async function POST(req: NextRequest) {
       : results,
   });
 }
-
-export const runtime = 'edge';

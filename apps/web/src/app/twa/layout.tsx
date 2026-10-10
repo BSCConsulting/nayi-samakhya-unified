@@ -19,5 +19,3 @@ export const viewport: Viewport = {
 export default function TwaLayout({ children }: { children: ReactNode }) {
   return children;
 }
-
-export const runtime = 'edge';

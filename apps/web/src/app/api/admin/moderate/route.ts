@@ -194,5 +194,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ ok: true, action: "approve" });
 }
-
-export const runtime = 'edge';

@@ -176,5 +176,3 @@ export default function SitemapPage() {
     </section>
   );
 }
-
-export const runtime = 'edge';

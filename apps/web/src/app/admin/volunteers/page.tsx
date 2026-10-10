@@ -63,5 +63,3 @@ export default function AdminVolunteersPage() {
     </main>
   );
 }
-
-export const runtime = 'edge';

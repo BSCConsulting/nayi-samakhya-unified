@@ -196,5 +196,3 @@ export async function POST(req: Request) {
     database: db,
   });
 }
-
-export const runtime = 'edge';

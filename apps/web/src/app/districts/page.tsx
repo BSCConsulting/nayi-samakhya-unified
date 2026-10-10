@@ -56,5 +56,3 @@ export default function DistrictsDirectoryPage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

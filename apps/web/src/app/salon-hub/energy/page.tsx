@@ -43,5 +43,3 @@ export default function SalonHubEnergyPage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

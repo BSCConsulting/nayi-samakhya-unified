@@ -17,5 +17,3 @@ export default async function NewsletterPage() {
   const payload = await loadNewsletterDigest();
   return <NewsletterClient payload={payload} />;
 }
-
-export const runtime = 'edge';

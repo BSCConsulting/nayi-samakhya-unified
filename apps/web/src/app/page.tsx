@@ -170,5 +170,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

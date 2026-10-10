@@ -60,5 +60,3 @@ export default function RepresentationPage() {
     </Suspense>
   );
 }
-
-export const runtime = 'edge';

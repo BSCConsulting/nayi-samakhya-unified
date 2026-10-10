@@ -66,5 +66,3 @@ export async function GET(_req: Request, { params }: Props) {
 
   return NextResponse.json({ ok: true, found: true, format_valid: true, docket: data });
 }
-
-export const runtime = 'edge';

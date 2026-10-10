@@ -300,5 +300,3 @@ export default function MatrimonialVerticalPage() {
     </div>
   );
 }
-
-export const runtime = 'edge';

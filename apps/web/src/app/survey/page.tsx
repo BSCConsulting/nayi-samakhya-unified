@@ -50,5 +50,3 @@ export default function StatewideSurveyPage() {
     </div>
   );
 }
-
-export const runtime = 'edge';
