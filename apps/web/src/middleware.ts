@@ -40,4 +40,3 @@ export const config = {
   matcher: ["/admin/:path*"],
 };
 
-export const runtime = 'edge';
