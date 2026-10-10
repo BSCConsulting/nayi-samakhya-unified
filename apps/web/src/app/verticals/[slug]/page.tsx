@@ -126,3 +126,5 @@ export default function VerticalPage({ params }: Props) {
     </div>
   );
 }
+
+export const runtime = 'edge';

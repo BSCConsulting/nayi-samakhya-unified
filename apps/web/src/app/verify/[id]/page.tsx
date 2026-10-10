@@ -29,3 +29,5 @@ export default async function VerifyDocketPage({ params }: Props) {
   const docketId = decodeURIComponent(id || "").trim();
   return <VerifyDocketClient docketId={docketId} />;
 }
+
+export const runtime = 'edge';

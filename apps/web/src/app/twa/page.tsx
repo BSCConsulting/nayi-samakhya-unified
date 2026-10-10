@@ -206,3 +206,5 @@ export default function TelegramMiniAppPage() {
     </>
   );
 }
+
+export const runtime = 'edge';

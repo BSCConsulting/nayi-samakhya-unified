@@ -94,3 +94,5 @@ export default function QuizPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

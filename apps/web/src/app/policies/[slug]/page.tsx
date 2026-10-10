@@ -62,3 +62,5 @@ export default function PolicyPage({
     </section>
   );
 }
+
+export const runtime = 'edge';

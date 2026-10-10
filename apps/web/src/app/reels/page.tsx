@@ -64,3 +64,5 @@ export default function ReelsPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

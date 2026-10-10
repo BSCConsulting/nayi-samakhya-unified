@@ -387,3 +387,5 @@ export default function CoordinatorCardPage() {
     </Suspense>
   );
 }
+
+export const runtime = 'edge';

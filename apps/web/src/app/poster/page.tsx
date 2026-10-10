@@ -259,3 +259,5 @@ export default function PosterPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

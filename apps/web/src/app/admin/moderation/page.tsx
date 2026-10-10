@@ -209,3 +209,5 @@ export default async function ModerationDeskPage({
     </main>
   );
 }
+
+export const runtime = 'edge';

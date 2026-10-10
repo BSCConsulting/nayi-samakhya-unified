@@ -369,3 +369,5 @@ export default function GalleryVerticalPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

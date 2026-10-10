@@ -11,5 +11,9 @@
     "build:web": "npm run build --workspace=apps/web",
     "build:matrimony": "npm run build --workspace=apps/matrimony",
     "test:matrimony": "npm test --workspace=apps/matrimony"
+  },
+  "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.10",
+    "wrangler": "^4.149.0"
   }
 }

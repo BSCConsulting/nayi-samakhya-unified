@@ -269,3 +269,5 @@ export default function HistoryPage() {
     </main>
   );
 }
+
+export const runtime = 'edge';

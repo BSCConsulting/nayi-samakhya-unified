@@ -863,3 +863,5 @@ export default function AdminDeskPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

@@ -22,3 +22,5 @@ export default function AdminLoginPage() {
     </Suspense>
   );
 }
+
+export const runtime = 'edge';

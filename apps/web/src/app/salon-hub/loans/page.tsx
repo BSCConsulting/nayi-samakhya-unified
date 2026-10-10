@@ -53,3 +53,5 @@ export default function SalonHubLoansPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

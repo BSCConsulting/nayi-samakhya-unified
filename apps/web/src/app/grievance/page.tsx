@@ -52,3 +52,5 @@ export default function GrievancePage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

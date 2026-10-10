@@ -449,3 +449,5 @@ export default function CivicFeedPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

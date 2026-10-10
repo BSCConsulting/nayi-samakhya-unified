@@ -231,3 +231,5 @@ export default async function SurveyPage({ params }: Props) {
     </div>
   );
 }
+
+export const runtime = 'edge';

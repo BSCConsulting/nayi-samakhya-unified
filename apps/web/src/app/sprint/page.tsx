@@ -50,3 +50,5 @@ export default function SprintPage() {
     </div>
   );
 }
+
+export const runtime = 'edge';

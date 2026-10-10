@@ -145,3 +145,5 @@ export default async function EntityDeskPage({ params }: Props) {
     </>
   );
 }
+
+export const runtime = 'edge';
