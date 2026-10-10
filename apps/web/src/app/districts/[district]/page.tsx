@@ -137,4 +137,3 @@ export default async function DistrictDetailPage({ params }: Props) {
   );
 }
 
-export const runtime = 'edge';

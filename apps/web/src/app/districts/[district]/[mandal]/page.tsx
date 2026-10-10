@@ -187,4 +187,3 @@ export default async function MandalDeskPage({ params }: Props) {
   );
 }
 
-export const runtime = 'edge';
