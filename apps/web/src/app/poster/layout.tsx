@@ -10,3 +10,5 @@ export const metadata: Metadata = {
 export default function PosterLayout({ children }: { children: ReactNode }) {
   return children;
 }
+
+export const runtime = 'edge';

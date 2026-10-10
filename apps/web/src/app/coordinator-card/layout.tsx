@@ -15,3 +15,5 @@ export default function CoordinatorCardLayout({
 }) {
   return children;
 }
+
+export const runtime = 'edge';
