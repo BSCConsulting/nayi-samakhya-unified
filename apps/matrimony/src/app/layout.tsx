@@ -11,7 +11,7 @@ const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '700'],
 const sans = Noto_Sans_Telugu({ subsets: ['telugu', 'latin'], weight: ['400', '600'], variable: '--font-sans', display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nayisamakhya.org'),
+  metadataBase: new URL('https://www.nayisamakhya.org'),
   title: {
     default: 'నాయీ సమాఖ్య కల్యాణ వేదిక · Nayi Brahmin Matrimony',
     template: '%s · Nayi Samakhya Matrimony',
@@ -31,12 +31,12 @@ export const metadata: Metadata = {
     'Telugu Matrimony Nayi',
   ],
   alternates: {
-    canonical: '/matrimony',
+    canonical: 'https://www.nayisamakhya.org/matrimony',
   },
   openGraph: {
     title: 'నాయీ సమాఖ్య కల్యాణ వేదిక · Nayi Brahmin Matrimony',
     description: 'తెలంగాణ మరియు ఆంధ్రప్రదేశ్ నాయీ బ్రాహ్మణుల అధికారిక కల్యాణ వేదిక. పవిత్ర సగోత్ర రక్షణ & ఉచిత సభ్యత్వ నమోదు.',
-    url: 'https://nayisamakhya.org/matrimony',
+    url: 'https://www.nayisamakhya.org/matrimony',
     siteName: 'Nayi Samakhya Matrimony',
     locale: 'te_IN',
     alternateLocale: 'en_IN',

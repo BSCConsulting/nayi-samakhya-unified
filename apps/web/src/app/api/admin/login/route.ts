@@ -9,6 +9,7 @@ import {
   expectedSessionSecret,
   timingSafeEqualString,
 } from "@/lib/admin/sessionAuth";
+import { checkRateLimit } from "@/lib/security/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -19,6 +20,23 @@ const NOT_CONFIGURED_MESSAGE =
   "సర్వర్ అడ్మిన్ లాగిన్ సెటప్ కాలేదు / Admin auth is not configured. Set ADMIN_SECRET_PIN (or MODERATION_DESK_SECRET) and ADMIN_SESSION_SECRET on Vercel, then redeploy.";
 
 export async function POST(request: Request) {
+  const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "127.0.0.1";
+  const rate = checkRateLimit(`admin_login_${clientIp}`, { intervalMs: 300_000, maxRequests: 5 });
+
+  if (!rate.allowed) {
+    return NextResponse.json(
+      {
+        success: false,
+        code: "rate_limited",
+        error: `చాలా విఫలమైన ప్రయత్నాలు జరిగాయి. దయచేసి ${rate.retryAfterSeconds} సెకన్ల తర్వాత మళ్ళీ ప్రయత్నించండి / Too many attempts. Try again in ${rate.retryAfterSeconds}s.`,
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rate.retryAfterSeconds) },
+      },
+    );
+  }
+
   if (!adminAuthConfigured()) {
     return NextResponse.json(
       {

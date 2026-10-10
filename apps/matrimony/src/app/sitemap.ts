@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://nayisamakhya.org/matrimony';
+  const baseUrl = 'https://www.nayisamakhya.org/matrimony';
   const lastModified = new Date();
 
   return [
@@ -16,6 +16,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: 'hourly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/help-centers`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/offline-meets`,
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/login`,

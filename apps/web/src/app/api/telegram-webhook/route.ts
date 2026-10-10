@@ -8,6 +8,7 @@ import {
 } from "@/config/communityHubs";
 import { dispatchDeskAudit } from "@/lib/bot/deskDispatch";
 import { parseDocketId } from "@/lib/representation/docket";
+import { timingSafeEqualString } from "@/lib/admin/sessionAuth";
 import {
   MSG,
   TG_FILE_PREFIX,
@@ -1201,7 +1202,7 @@ export async function POST(req: Request) {
       { status: 503 },
     );
   }
-  if (header !== secret) {
+  if (!header || !timingSafeEqualString(header.trim(), secret)) {
     return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
   }
 

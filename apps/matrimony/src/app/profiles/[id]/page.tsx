@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { z } from 'zod';
@@ -239,6 +240,27 @@ const SAMPLE_PROFILES: Record<string, any> = {
     siblings: '1 Younger Sister',
   },
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  return {
+    title: `Candidate Profile (${id}) · Nayi Samakhya Matrimony`,
+    description: 'Protected matrimonial profile under DPDP Act 2023 statutory privacy controls.',
+    robots: {
+      index: false,
+      follow: false,
+      nocache: true,
+      googleBot: {
+        index: false,
+        follow: false,
+        noimageindex: true,
+      },
+    },
+    other: {
+      'X-Robots-Tag': 'noindex, nofollow, noarchive',
+    },
+  };
+}
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

@@ -13,15 +13,6 @@ declare global {
   }
 }
 
-// Sample registry mapping Unique ID to candidate mobile numbers for demo & testing
-const ID_PHONE_DIRECTORY: Record<string, string> = {
-  'NS-M1042': '9848012345',
-  'NS-F1043': '9848012346',
-  'NS-M1044': '9848012347',
-  'NS-F1045': '9848012348',
-  'NS-M1046': '9848012349',
-};
-
 export default function LoginPage() {
   const [loginMode, setLoginMode] = useState<'mobile' | 'uniqueId'>('mobile');
   const [step, setStep] = useState<'input' | 'otp'>('input');
@@ -83,7 +74,19 @@ export default function LoginPage() {
         setErrorMsg('దయచేసి సరైన యూనిక్ ఐడీ నమోదు చేయండి (ఉదా: NS-M1042 లేదా NS-F1043).');
         return;
       }
-      targetPhone = ID_PHONE_DIRECTORY[cleanId] || '9848012345'; // default registered fallback
+      // Query backend for linked registered phone number
+      try {
+        const res = await fetch(`/matrimony/api/auth/otp-request?uniqueId=${encodeURIComponent(cleanId)}`);
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.phone) {
+          setErrorMsg('ఈ యూనిక్ ఐడీతో నమోదు చేయబడిన వివరాలు లభించలేదు. దయచేసి మొబైల్ నంబర్ ద్వారా లాగిన్ అవ్వండి.');
+          return;
+        }
+        targetPhone = data.phone;
+      } catch {
+        setErrorMsg('సర్వర్ కనెక్షన్ లోపం. దయచేసి మొబైల్ నంబర్ ద్వారా లాగిన్ అవ్వండి.');
+        return;
+      }
     }
 
     setResolvedPhone(targetPhone);
@@ -103,10 +106,15 @@ export default function LoginPage() {
     } catch (err: unknown) {
       console.error('Firebase SMS gateway error:', err);
       setIsSubmitting(false);
-
-      const maskedTarget = `${targetPhone.slice(0, 2)}******${targetPhone.slice(-2)}`;
-      setStep('otp');
-      setSuccessMsg(`రక్షణ కోడ్ +91 ${maskedTarget} కు పంపబడింది. (పరీక్ష కోడ్: 123456)`);
+      // In dev environment with mock enabled, allow local testing
+      const isDevMock = process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_ENABLE_DEV_MOCK_AUTH === 'true';
+      if (isDevMock) {
+        const maskedTarget = `${targetPhone.slice(0, 2)}******${targetPhone.slice(-2)}`;
+        setStep('otp');
+        setSuccessMsg(`[Dev Mode] రక్షణ కోడ్ +91 ${maskedTarget} కు పంపబడింది. (టెస్ట్ కోడ్: 123456)`);
+      } else {
+        setErrorMsg('ఎస్ఎంఎస్ ఓటీపీ గేట్‌వే తాత్కాలికంగా స్పందించడం లేదు. దయచేసి కొద్దిసేపటి తర్వాత మళ్ళీ ప్రయత్నించండి లేదా సహాయ డెస్క్‌ను సంప్రదించండి.');
+      }
     }
   };
 
@@ -121,23 +129,29 @@ export default function LoginPage() {
     }
 
     setIsSubmitting(true);
+    const isDevMock = process.env.NODE_ENV !== 'production' && process.env.NEXT_PUBLIC_ENABLE_DEV_MOCK_AUTH === 'true';
 
     try {
+      let idToken = '';
       if (window.confirmationResult) {
-        await window.confirmationResult.confirm(cleanOtp);
-      } else if (cleanOtp !== '123456') {
+        const userCred = await window.confirmationResult.confirm(cleanOtp);
+        idToken = await userCred.user.getIdToken();
+      } else if (isDevMock && cleanOtp === '123456') {
+        idToken = 'dev_mock_id_token';
+      } else {
         throw new Error('చెల్లని కోడ్ నమోదు చేయబడింది.');
       }
 
-      // Establish verified session cookie
-      try {
-        await fetch('/matrimony/api/auth/session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: resolvedPhone, uniqueId }),
-        });
-      } catch {
-        // Continue even if local session fetch fails
+      // Establish verified session cookie via backend
+      const sessionRes = await fetch('/matrimony/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: resolvedPhone, uniqueId, idToken }),
+      });
+
+      if (!sessionRes.ok) {
+        const errData = await sessionRes.json().catch(() => ({}));
+        throw new Error(errData.error || 'సెషన్ ధృవీకరణ విఫలమైంది.');
       }
 
       const searchParams = new URLSearchParams(window.location.search);
@@ -150,26 +164,6 @@ export default function LoginPage() {
       window.location.href = targetUrl;
     } catch (err: unknown) {
       console.error('OTP verification error:', err);
-      if (cleanOtp === '123456') {
-        try {
-          await fetch('/matrimony/api/auth/session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone: resolvedPhone, uniqueId }),
-          });
-        } catch {
-          // ignore
-        }
-        const searchParams = new URLSearchParams(window.location.search);
-        const rawReturnTo = searchParams.get('return_to');
-        const targetUrl = (rawReturnTo && rawReturnTo.startsWith('/matrimony') && !rawReturnTo.startsWith('//'))
-          ? rawReturnTo
-          : '/matrimony/onboarding';
-
-        setIsSubmitting(false);
-        window.location.href = targetUrl;
-        return;
-      }
       setIsSubmitting(false);
       setErrorMsg('తప్పుడు లేదా గడువు ముగిసిన ధృవీకరణ కోడ్. దయచేసి SMS చూసి మళ్ళీ ప్రయత్నించండి.');
     }
