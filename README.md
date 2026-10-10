@@ -27,6 +27,13 @@ nayi-samakhya-unified/
   - Village Elder & Community Endorsement System (*గ్రామ పెద్దల ధృవీకరణ పత్రం*)
   - Senior Voice Narration & Kalyana Rayabharam Concierge
 
+## Production Cloudflare + Supabase Architecture
+
+- **Domain & DNS**: `https://nayisamakhya.org` via Cloudflare Managed DNS + WAF + DDoS Mitigation
+- **Relational Database**: Supabase PostgreSQL (Port 6543 connection pooler, DPDP AES-256 column encryption via `pgcrypto`)
+- **Media Object Storage**: Cloudflare R2 (`nsm-profile-photos` bucket, S3-compatible, zero egress bandwidth costs)
+- **Monorepo Sub-path Routing**: `nayisamakhya.org/` (Web Portal) & `nayisamakhya.org/matrimony` (Matrimony Platform)
+
 ## Development Commands
 
 ```bash
