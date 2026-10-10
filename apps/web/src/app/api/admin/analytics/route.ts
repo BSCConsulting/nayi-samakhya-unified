@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { TELANGANA_DISTRICTS } from "@/lib/data/districts";
+import { TELANGANA_DISTRICTS } from "../../../../lib/data/districts";
 import {
   PILOT_CORRIDORS,
   buildEmptySaturationRows,
@@ -11,7 +11,7 @@ import {
   tierForIndex,
   type DistrictSaturation,
   type PilotCorridorKpi,
-} from "@/lib/analytics/saturation";
+} from "../../../../lib/analytics/saturation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";

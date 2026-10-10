@@ -22,12 +22,12 @@ import {
   MapPin,
   X,
 } from "lucide-react";
-import { TelanganaHeatMap } from "@/components/admin/TelanganaHeatMap";
+import { TelanganaHeatMap } from "../../../components/admin/TelanganaHeatMap";
 import type {
   DistrictSaturation,
   PilotCorridorKpi,
-} from "@/lib/analytics/saturation";
-import { slugFromDistrictLabel } from "@/lib/analytics/saturation";
+} from "../../../lib/analytics/saturation";
+import { slugFromDistrictLabel } from "../../../lib/analytics/saturation";
 import { TELANGANA_DISTRICTS } from "@/lib/data/districts";
 
 type QueueTab = "pending" | "approved" | "rejected";

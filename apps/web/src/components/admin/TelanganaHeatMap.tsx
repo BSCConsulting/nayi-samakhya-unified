@@ -19,7 +19,7 @@ import {
   type DistrictSaturation,
   type PilotCorridorKpi,
   type SaturationTier,
-} from "@/lib/analytics/saturation";
+} from "../../lib/analytics/saturation";
 
 type TopoDistrictProps = {
   district?: string;

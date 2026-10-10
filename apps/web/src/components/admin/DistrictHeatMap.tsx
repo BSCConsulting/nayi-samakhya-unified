@@ -5,4 +5,4 @@ export {
   TelanganaHeatMap as default,
   TelanganaHeatMap,
   type TelanganaHeatMapProps,
-} from "@/components/admin/TelanganaHeatMap";
+} from "./TelanganaHeatMap";

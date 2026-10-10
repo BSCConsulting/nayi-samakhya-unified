@@ -12,6 +12,10 @@
     "build:matrimony": "npm run build --workspace=apps/matrimony",
     "test:matrimony": "npm test --workspace=apps/matrimony"
   },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.20.10",
     "wrangler": "^4.149.0"
