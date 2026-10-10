@@ -36,13 +36,16 @@ export function Nav({ claims }: { claims?: SsoClaims | null }) {
         </Link>
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '0.9rem', alignItems: 'center', flexWrap: 'wrap' }}>
         <Link href="/" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Home" te="హోమ్" /></Link>
         <Link href="/discover" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Discover" te="అన్వేషణ" /></Link>
+        <Link href="/offline-meets" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Meets" te="సమ్మేళనాలు" /></Link>
+        <Link href="/help-centers" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Help Centers" te="సహాయ కేంద్రాలు" /></Link>
         {claims && <Link href="/interests" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Interests" te="ఆసక్తులు" /></Link>}
         {claims && <Link href="/settings/privacy" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Privacy" te="గోప్యత" /></Link>}
         {admin && <Link href="/nsm-admin" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Admin" te="నిర్వహణ" /></Link>}
         <LanguageToggle />
+
         {!claims && (
           <Link 
             href="/login" 

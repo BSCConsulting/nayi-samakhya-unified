@@ -5,6 +5,7 @@ import { withTx, type DbContext } from './db.ts';
 import { AppError } from './http.ts';
 import type { GrievanceActionSchema, ReviewActionSchema } from './matrimony.ts';
 import { photoUrl } from './storage.ts';
+import { notifyProfileApproved } from './telegram.ts';
 
 // /nsm-admin queues. Scope is decided by the database (sub_admins assignment AND token role, via
 // RLS and the SECURITY DEFINER routines); the page only chooses which queues to render.
@@ -74,6 +75,17 @@ export async function reviewProfile(ctx: DbContext, a: ReviewAction) {
     );
     // Out of scope and nonexistent look the same.
     if (rowCount !== 1) throw new AppError(404, 'not_found');
+    if (a.action === 'verify') {
+      const p = await tx.query('SELECT display_name, ancestral_native_district, ancestral_native_mandal FROM matrimony_shared.profiles WHERE id = $1', [a.profileId]);
+      if (p.rows[0]) {
+        notifyProfileApproved({
+          id: a.profileId,
+          displayName: p.rows[0].display_name,
+          district: p.rows[0].ancestral_native_district,
+          mandal: p.rows[0].ancestral_native_mandal,
+        }).catch(() => undefined);
+      }
+    }
     return { status: a.action === 'verify' ? 'verified' : 'rejected' };
   });
 }

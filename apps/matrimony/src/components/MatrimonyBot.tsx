@@ -156,6 +156,7 @@ export function MatrimonyBot() {
       {/* Floating Trigger Button with Guaranteed Inline Stacking */}
       <button
         type="button"
+        className="kalyana-mitra-trigger"
         onClick={() => {
           if (isOpen) {
             stopAudio();
@@ -187,7 +188,7 @@ export function MatrimonyBot() {
           <div style={{ fontSize: "13px", fontWeight: 800, color: "#FDE68A", lineHeight: 1.2 }}>
             {lang === "te" ? "కల్యాణ మిత్ర సహాయం" : "Kalyana Mitra AI"}
           </div>
-          <div style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)", lineHeight: 1.2 }}>
+          <div className="trigger-subtitle" style={{ fontSize: "11px", color: "rgba(255, 255, 255, 0.9)", lineHeight: 1.2 }}>
             {lang === "te" ? "31 ప్రశ్నలు & వాయిస్ సమాధానాలు" : "31 FAQs & Audio Voice"}
           </div>
         </div>
@@ -196,6 +197,7 @@ export function MatrimonyBot() {
       {/* Main Bot Dialog / Drawer with Guaranteed Inline Styles */}
       {isOpen && (
         <div 
+          className="kalyana-mitra-dialog"
           style={{
             position: "fixed",
             bottom: "88px",
@@ -214,6 +216,7 @@ export function MatrimonyBot() {
             fontFamily: "'Noto Sans Telugu', system-ui, sans-serif",
           }}
         >
+
           {/* Header */}
           <div style={{
             background: "linear-gradient(135deg, #801426 0%, #5B0C1A 100%)",

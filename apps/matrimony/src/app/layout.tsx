@@ -80,6 +80,7 @@ export const viewport = {
 
 import { LanguageProvider } from '../context/LanguageContext.tsx';
 import { MatrimonyBot } from '../components/MatrimonyBot.tsx';
+import { GlobalCommunityHelpBar } from '../components/GlobalCommunityHelpBar.tsx';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="notranslate">
         <LanguageProvider>
+          <GlobalCommunityHelpBar />
           {children}
           <MatrimonyBot />
         </LanguageProvider>
@@ -96,3 +98,4 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   );
 }
+

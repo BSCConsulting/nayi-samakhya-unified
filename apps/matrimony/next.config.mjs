@@ -6,7 +6,18 @@ const nextConfig = {
   poweredByHeader: false,
   trailingSlash: false,
   output: 'standalone',
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/matrimony',
+        basePath: false,
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
+
     return [
       {
         source: '/:path*',

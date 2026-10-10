@@ -56,12 +56,15 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
     pathname === '/preview' ||
     pathname === '/discover' ||
     pathname === '/onboarding' ||
+    pathname === '/help-centers' ||
+    pathname === '/offline-meets' ||
     pathname.startsWith('/audio') ||
     pathname.startsWith('/api/auth') ||
     pathname.startsWith('/profiles')
   ) {
     return NextResponse.next();
   }
+
 
   const sso = getSsoConfig();
   const requestId = req.headers.get('x-request-id') ?? '-';
