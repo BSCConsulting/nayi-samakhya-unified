@@ -42,6 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/salon-hub/energy",
     "/salon-hub/loans",
     "/welfare/salon-schemes",
+    "/matrimony",
     "/districts",
     "/poster",
     "/announce",
