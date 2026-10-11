@@ -246,100 +246,75 @@ export function HomeMobileHeader() {
 
           <nav
             aria-label="Primary"
-            className="no-scrollbar flex min-w-0 flex-1 items-center justify-end gap-1.5 overflow-x-auto overscroll-x-contain touch-pan-x"
+            className="no-scrollbar flex min-w-0 flex-1 items-center justify-end gap-1 overflow-x-auto overscroll-x-contain touch-pan-x"
           >
             <Link
               href="/districts"
-              className="civic-focus-ring hidden shrink-0 items-center gap-1 rounded-lg px-2.5 py-2 font-telugu text-xs font-semibold text-slate-600 transition hover:bg-[#F4F2EB] hover:text-[#B45309] xl:inline-flex"
+              className="civic-focus-ring hidden shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 xl:inline-flex"
             >
               <MapPin className="h-3.5 w-3.5 text-civic-bronze" aria-hidden />
               {t("navDistrictsShort")}
             </Link>
             <Link
               href="/survey"
-              className="civic-focus-ring hidden shrink-0 items-center gap-1 rounded-lg px-2.5 py-2 font-telugu text-xs font-semibold text-slate-600 transition hover:bg-[#F4F2EB] hover:text-[#B45309] lg:inline-flex"
+              className="civic-focus-ring hidden shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 lg:inline-flex"
             >
               {t("navSurveyShort")}
-              <span className="rounded border border-[#B45309]/35 bg-[#B45309]/10 px-1 font-telugu text-[8px] font-bold tracking-wide text-[#B45309]">
-                New
+              <span className="rounded-full bg-amber-100 px-1.5 py-0.2 font-mono text-[9px] font-bold text-amber-800">
+                Live
               </span>
             </Link>
             <Link
               href="/representation"
-              className="civic-focus-ring inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-2 font-telugu text-xs font-semibold text-slate-600 transition hover:bg-[#F4F2EB] hover:text-[#B45309]"
+              className="civic-focus-ring inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               <FileText className="h-3.5 w-3.5 text-civic-bronze" aria-hidden />
               {t("navRepresentation")}
             </Link>
             <Link
               href="/grievance"
-              className="civic-focus-ring inline-flex shrink-0 items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/15 px-2.5 py-1.5 font-telugu text-xs font-bold text-amber-900 transition hover:bg-amber-500/25"
+              className="civic-focus-ring inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               {t("navGrievanceShort")}
             </Link>
             <Link
               href="/feed"
-              className="civic-focus-ring hidden shrink-0 items-center rounded-lg px-2.5 py-2 font-telugu text-xs font-semibold text-slate-600 transition hover:bg-[#F4F2EB] hover:text-[#B45309] xl:inline-flex"
+              className="civic-focus-ring hidden shrink-0 items-center rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 xl:inline-flex"
             >
               {t("navGazette")}
             </Link>
-            <CompetitionsMenu className="hidden shrink-0 2xl:block" />
             <Link
-              href="/salon-hub"
-              className="civic-focus-ring hidden shrink-0 items-center gap-1.5 rounded-full border border-[#B45309]/35 bg-[#B45309]/10 px-2.5 py-1.5 font-telugu text-[11px] font-bold text-[#B45309] transition hover:bg-[#B45309]/15 lg:inline-flex"
+              href="/matrimony"
+              className="civic-focus-ring inline-flex shrink-0 items-center rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
-              <Scissors className="h-3 w-3 shrink-0" aria-hidden />
-              {t("navSalonHub")}
+              {language === "te" ? "వివాహ వేదిక" : "Matrimony"}
+            </Link>
+            <Link
+              href="/welfare/salon-schemes"
+              className="civic-focus-ring hidden shrink-0 items-center gap-1.5 rounded-lg border border-amber-300/70 bg-amber-50/80 px-2.5 py-1.5 font-telugu text-xs font-semibold text-amber-900 transition hover:bg-amber-100/90 lg:inline-flex"
+            >
+              <span className="text-amber-600">⚡</span>
+              {isTe ? "సంక్షేమ పథకాలు" : "Welfare Hub"}
             </Link>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-1.5 self-center">
-            <div
-              className="flex items-center rounded-lg border border-slate-200 bg-[#FBFBFA] p-0.5"
-              role="group"
-              aria-label="Language"
+          <div className="flex shrink-0 items-center gap-2 self-center">
+            <button
+              type="button"
+              onClick={() => setLanguage(language === "te" ? "en" : "te")}
+              className="tap hidden h-8 items-center rounded-lg border border-slate-200 bg-white px-2.5 font-sans text-xs font-bold text-slate-700 transition hover:bg-slate-50 md:inline-flex"
+              aria-label="Language switch"
             >
-              <button
-                type="button"
-                onClick={() => setLanguage("te")}
-                className={cn(
-                  "tap inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 font-telugu text-[11px] font-bold",
-                  language === "te"
-                    ? "bg-[#B45309] text-white"
-                    : "text-slate-600",
-                )}
-              >
-                తె
-              </button>
-              <button
-                type="button"
-                onClick={() => setLanguage("en")}
-                className={cn(
-                  "tap inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-[11px] font-bold",
-                  language === "en"
-                    ? "bg-[#B45309] text-white"
-                    : "text-slate-600",
-                )}
-              >
-                EN
-              </button>
-            </div>
+              {language === "te" ? "English" : "తెలుగు"}
+            </button>
+
             <Link
               href="/survey"
-              className={`civic-focus-ring inline-flex min-h-10 items-center gap-1.5 rounded-xl bg-civic-bronze px-3.5 py-2 text-xs font-bold text-white shadow-xs transition-all hover:bg-civic-bronze-hover ${isTe ? "font-telugu" : "font-sans"}`}
+              className={`tap hidden items-center gap-1.5 rounded-lg bg-[#C2410C] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs transition hover:bg-[#9A3412] lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
             >
-              {t("navCtaSurvey")}
+              <span>{t("navCtaSurvey")}</span>
+              <span aria-hidden>&rarr;</span>
             </Link>
-            <a
-              href="https://t.me/NayiSamakhyaDeskBot"
-              target="_blank"
-              rel="noreferrer"
-              className="civic-focus-ring inline-flex h-10 w-10 items-center justify-center rounded-xl border border-civic-border bg-white text-civic-ink transition hover:bg-civic-subtle"
-              aria-label="Telegram desk bot"
-              title="@NayiSamakhyaDeskBot"
-            >
-              <Send className="h-3.5 w-3.5" aria-hidden />
-            </a>
           </div>
         </div>
       </header>
