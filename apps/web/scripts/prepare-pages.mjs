@@ -34,7 +34,7 @@ if (fs.existsSync(staticDir)) {
   console.log("Mapped static assets to _next/static.");
 }
 
-// 4. Copy public folder assets (favicons, images, manifest, _redirects) into .next root
+// 4. Copy public folder assets (favicons, images, manifest) into .next root
 if (fs.existsSync(publicDir)) {
   fs.cpSync(publicDir, nextDir, { recursive: true });
   console.log("Copied public assets to .next root.");
@@ -67,9 +67,8 @@ if (fs.existsSync(matrimonyNext)) {
     fs.cpSync(matrimonyPublic, matrimonyTargetDir, { recursive: true });
   }
 
-  // CRITICAL FOR CLOUDFLARE PAGES:
-  // When users request /matrimony (without trailing slash), Cloudflare Pages checks for matrimony.html.
-  // Copy matrimony/index.html to .next/matrimony.html so /matrimony loads seamlessly.
+  // Copy matrimony/index.html to .next/matrimony.html
+  // Cloudflare Pages serves .next/matrimony.html directly when /matrimony is requested.
   const matIndexHtml = path.join(matrimonyTargetDir, "index.html");
   const matRootHtml = path.join(nextDir, "matrimony.html");
   if (fs.existsSync(matIndexHtml)) {
