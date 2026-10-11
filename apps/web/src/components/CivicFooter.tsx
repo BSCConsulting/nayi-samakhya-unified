@@ -211,8 +211,19 @@ export function CivicFooter() {
                   {isTe ? "సెలూన్ సంక్షేమ పథకాలు (250 యూనిట్లు & PM విశ్వకర్మ)" : "Salon Welfare Schemes (Free Power & Vishwakarma)"}
                 </FooterNavLink>
               </li>
+              <li>
+                <FooterNavLink href="/matrimony" icon={Users}>
+                  {isTe ? "వివాహ వేదిక (Matrimony Hub)" : "Matrimonial Portal (Samakhya Matrimony)"}
+                </FooterNavLink>
+              </li>
+              <li>
+                <FooterNavLink href="/welfare/salon-schemes#kalyana-lakshmi" icon={ScrollText}>
+                  {isTe ? "కళ్యాణ లక్ష్మి సహాయ డెస్క్ (₹1,00,116)" : "Kalyana Lakshmi Guide Desk (₹1,00,116)"}
+                </FooterNavLink>
+              </li>
             </ul>
           </div>
+
 
           {/* Col 3 — Coordinators */}
           <div>

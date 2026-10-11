@@ -14,6 +14,8 @@ import {
   CalendarDays,
   MapPin,
   Phone,
+  Sparkles,
+  Award,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -39,6 +41,7 @@ const trustPillars = [
     en: "Data Privacy Protection",
   },
 ] as const;
+
 
 const profiles = [
   {
@@ -202,40 +205,73 @@ export default function MatrimonialVerticalPage() {
         </nav>
 
         {/* Header & trust charter */}
-        <header className="rounded-2xl border border-[#EBE8E0] bg-white p-6 shadow-sm sm:p-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C2410C]">
-            Samakhya Matrimonial Services
-          </p>
-          <h1
-            className={`mt-2 text-2xl font-bold tracking-tight text-[#18181B] sm:text-3xl ${te ? "font-telugu leading-relaxed" : ""}`}
-          >
-            {te
-              ? "నాయీ - భజంత్రి సమాఖ్య వివాహ వేదిక"
-              : "Nayi–Bajantri Samakhya Matrimonial Portal"}
-          </h1>
-          <p className={`mt-1 text-base text-[#71717A] ${te ? "" : "font-telugu"}`}>
-            {te
-              ? "Samakhya Matrimonial Services"
-              : "నాయీ - భజంత్రి సమాఖ్య వివాహ వేదిక"}
-          </p>
+        <header className="relative overflow-hidden rounded-3xl border border-amber-200/80 bg-gradient-to-b from-[#FFFDF7] via-white to-[#FFF9F2] p-6 shadow-sm sm:p-8">
+          <div className="absolute right-0 top-0 -mr-16 -mt-16 h-64 w-64 rounded-full bg-gradient-to-br from-amber-400/10 to-orange-500/5 blur-3xl pointer-events-none" />
+          
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-4">
+              <div className="relative h-18 w-18 shrink-0 overflow-hidden rounded-2xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-100 p-1.5 shadow-md">
+                <Image
+                  src="/matrimony/matrimony-emblem.png"
+                  alt="నాయీ సమాఖ్య కల్యాణ వేదిక చిహ్నం"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain"
+                  priority
+                />
+              </div>
+              <div>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-amber-300/80 bg-amber-50/80 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#C2410C]">
+                  <Sparkles className="h-3 w-3 text-amber-600" aria-hidden />
+                  Samakhya Matrimonial Services · అధికారిక వివాహ వేదిక
+                </div>
+                <h1
+                  className={`mt-1.5 text-2xl font-bold tracking-tight text-[#18181B] sm:text-3xl ${te ? "font-telugu leading-snug" : ""}`}
+                >
+                  {te
+                    ? "నాయీ - భజంత్రి సమాఖ్య వివాహ వేదిక"
+                    : "Nayi–Bajantri Samakhya Matrimonial Portal"}
+                </h1>
+                <p className={`text-xs font-semibold text-amber-800/80 ${te ? "" : "font-telugu"}`}>
+                  {te
+                    ? "తెలుగు రాష్ట్రాల నాయి బ్రాహ్మణ & భజంత్రి కుటుంబాల సమగ్ర పరిచయ వేదిక"
+                    : "Official Matrimonial Service for Telugu States"}
+                </p>
+              </div>
+            </div>
+
+            <div className="hidden lg:block shrink-0 rounded-2xl border border-amber-200/60 bg-amber-50/40 p-3.5 text-right">
+              <p className="text-[11px] font-medium text-slate-500">అధికారిక హెల్ప్‌లైన్ / Support</p>
+              <a
+                href="https://wa.me/919032654111"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-0.5 inline-flex items-center gap-1.5 font-mono text-sm font-bold text-[#C2410C] hover:underline"
+              >
+                <Phone className="h-3.5 w-3.5" aria-hidden />
+                +91 9032654111
+              </a>
+            </div>
+          </div>
+
           <p
-            className={`mt-3 max-w-2xl text-sm leading-relaxed text-[#71717A] ${te ? "font-telugu" : ""}`}
+            className={`mt-4 max-w-3xl text-sm leading-relaxed text-[#71717A] ${te ? "font-telugu" : ""}`}
           >
             {te
-              ? "గౌరవప్రదమైన, సమాజ ధృవీకృత వివాహ సంబంధాల కోసం అధికారిక వేదిక — ఉచిత నమోదు, కుటుంబ సమన్వయం, గోప్యతా రక్షణ."
-              : "An official hub for dignified, community-verified matrimonial connections — free registration, family coordination, and privacy protection."}
+              ? "గౌరవప్రదమైన, సమాజ ధృవీకృత వివాహ సంబంధాల కోసం అధికారిక వేదిక — ఉచిత నమోదు, మండల వారీగా వంశ/గోత్ర సమన్వయం, గోప్యతా రక్షణ మరియు ప్రభుత్వ కల్యాణ లక్ష్మి పథకం మార్గదర్శకత్వం."
+              : "An official hub for dignified, community-verified matrimonial connections — zero registration fee, mandal-level family coordination, verified lineage, and government Kalyana Lakshmi scheme guidance."}
           </p>
 
           <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {trustPillars.map((pillar) => (
               <li
                 key={pillar.en}
-                className="flex items-start gap-2.5 rounded-xl border border-[#EBE8E0] bg-[#FBFBF9] px-3 py-3"
+                className="flex items-start gap-2.5 rounded-xl border border-amber-200/50 bg-white/90 px-3.5 py-3 shadow-2xs backdrop-blur-xs"
               >
                 <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#C2410C]/10 text-[#C2410C]">
                   <pillar.icon className="h-4 w-4" aria-hidden />
                 </span>
-                <span className={`text-xs font-medium leading-snug text-[#18181B] ${te ? "font-telugu" : ""}`}>
+                <span className={`text-xs font-semibold leading-snug text-[#18181B] ${te ? "font-telugu" : ""}`}>
                   {te ? pillar.te : pillar.en}
                 </span>
               </li>
@@ -243,29 +279,68 @@ export default function MatrimonialVerticalPage() {
           </ul>
         </header>
 
+        {/* Kalyana Lakshmi Scheme Highlight Banner */}
+        <section aria-label="Kalyana Lakshmi Guidance" className="mt-5">
+          <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border-2 border-amber-300/80 bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-amber-500/10 p-4 sm:flex-row sm:items-center sm:px-6">
+            <div className="flex items-center gap-3.5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#C2410C] to-amber-700 text-white shadow-sm">
+                <Award className="h-6 w-6" aria-hidden />
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-sm bg-[#C2410C] px-1.5 py-0.5 text-[10px] font-bold text-white uppercase">
+                    వధూవరుల సంక్షేమం · ₹1,00,116
+                  </span>
+                </div>
+                <h2 className={`mt-0.5 text-base font-bold text-slate-900 ${te ? "font-telugu" : ""}`}>
+                  {te
+                    ? "తెలంగాణ కళ్యాణ లక్ష్మి పథకం (₹1,00,116) సమగ్ర దరఖాస్తు గైడ్"
+                    : "Telangana Govt Kalyana Lakshmi Financial Aid Guide (₹1,00,116)"}
+                </h2>
+                <p className={`text-xs text-slate-600 ${te ? "font-telugu" : ""}`}>
+                  {te
+                    ? "బీసీ/ఎస్సీ/ఎస్టీ/ఈబీసీ వధువులకు ప్రభుత్వ ఆర్థిక సహాయం అర్హతలు, ధృవపత్రాలు మరియు ఉచిత సమన్వయం."
+                    : "Eligibility rules, required certificates, and free community desk pre-fill assistance for brides."}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex w-full shrink-0 items-center gap-2 sm:w-auto">
+              <Link
+                href="/welfare/salon-schemes"
+                className={`tap inline-flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#C2410C] to-amber-700 px-4 py-2.5 text-xs font-bold text-white shadow-sm hover:from-[#9A3412] hover:to-amber-800 ${te ? "font-telugu" : ""}`}
+              >
+                <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+                {te ? "సంక్షేమ పథకాల డెస్క్ చూడండి" : "View Welfare Desk"}
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Action strip */}
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row">
           <a
             href="https://wa.me/919032654111?text=%E0%B0%A8%E0%B0%AE%E0%B0%B8%E0%B1%8D%E0%B0%95%E0%B0%BE%E0%B0%B0%E0%B0%82%2C%20%E0%B0%AC%E0%B0%AF%E0%B1%8B%E0%B0%A1%E0%B1%87%E0%B0%9F%E0%B0%BE%20%E0%B0%A8%E0%B0%AE%E0%B1%8B%E0%B0%A6%E0%B1%81%20%E0%B0%95%E0%B0%BE%E0%B0%B5%E0%B0%BE%E0%B0%B2%E0%B0%BF"
             target="_blank"
             rel="noreferrer"
-            className={`tap inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#C2410C] px-5 py-3.5 text-sm font-semibold text-white hover:bg-[#9A3412] ${te ? "font-telugu" : ""}`}
+            className={`tap inline-flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#C2410C] to-amber-700 px-5 py-3.5 text-sm font-bold text-white shadow-sm hover:from-[#9A3412] hover:to-amber-800 ${te ? "font-telugu" : ""}`}
           >
             <FilePenLine className="h-4 w-4 shrink-0" aria-hidden />
             {te
-              ? "నూతన బయోడేటా నమోదు చేయండి (Free Registration)"
+              ? "నూతన బయోడేటా నమోదు చేయండి (ఉచిత నమోదు)"
               : "Register new biodata (Free Registration)"}
           </a>
           <a
             href="#profiles"
-            className={`tap inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[#EBE8E0] bg-white px-5 py-3.5 text-sm font-semibold text-[#18181B] hover:border-[#C2410C]/40 hover:bg-[#FFF7ED] ${te ? "font-telugu" : ""}`}
+            className={`tap inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-amber-200 bg-white px-5 py-3.5 text-sm font-bold text-[#18181B] shadow-2xs hover:border-[#C2410C]/40 hover:bg-[#FFF7ED] ${te ? "font-telugu" : ""}`}
           >
             <Search className="h-4 w-4 shrink-0 text-[#C2410C]" aria-hidden />
             {te
-              ? "వివాహ సంబంధాల శోధన (Search Profiles)"
-              : "Search matrimonial profiles"}
+              ? "ధృవీకృత ప్రొఫైల్స్ శోధన (8 సంబంధాలు ప్రత్యక్షం)"
+              : "Search verified profiles (8 Live Profiles)"}
           </a>
         </div>
+
 
         {/* Featured profiles */}
         <section id="profiles" className="mt-10 scroll-mt-24" aria-labelledby="profiles-heading">
@@ -283,7 +358,7 @@ export default function MatrimonialVerticalPage() {
             {profiles.map((p) => (
               <article
                 key={p.id}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-[#EBE8E0] bg-white shadow-sm transition-all duration-300 hover:border-[#C2410C]/40 hover:shadow-md"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-amber-200/70 bg-white shadow-2xs transition-all duration-300 hover:border-[#C2410C]/50 hover:shadow-lg hover:-translate-y-0.5"
               >
                 {/* Photo frame */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
@@ -294,14 +369,14 @@ export default function MatrimonialVerticalPage() {
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
                   
                   {/* Top badges */}
-                  <div className="absolute inset-x-2 top-2 flex items-center justify-between gap-1 text-[10px] font-bold">
-                    <span className="rounded-md border border-amber-400/40 bg-black/60 px-2 py-0.5 font-mono text-amber-300 backdrop-blur-xs">
+                  <div className="absolute inset-x-2.5 top-2.5 flex items-center justify-between gap-1 text-[10px] font-bold">
+                    <span className="rounded-md border border-amber-400/50 bg-black/70 px-2 py-0.5 font-mono text-amber-300 backdrop-blur-xs shadow-xs">
                       {p.uniqueId}
                     </span>
-                    <span className="rounded-md border border-emerald-400/40 bg-emerald-950/80 px-2 py-0.5 text-emerald-200 backdrop-blur-xs">
+                    <span className="rounded-md border border-emerald-400/50 bg-emerald-950/85 px-2 py-0.5 text-emerald-200 backdrop-blur-xs shadow-xs">
                       {te ? p.badge.te : p.badge.en}
                     </span>
                   </div>
@@ -311,7 +386,7 @@ export default function MatrimonialVerticalPage() {
                     <p className="text-base font-bold drop-shadow-md">
                       {p.age} {te ? "సంవత్సరాలు" : "Years"} · {te ? p.height.te : p.height.en}
                     </p>
-                    <p className="text-xs text-amber-200/90 drop-shadow-sm">
+                    <p className="text-xs font-medium text-amber-200 drop-shadow-sm">
                       {te ? p.gothra.te : p.gothra.en} గోత్రం · {te ? p.wing.te : p.wing.en}
                     </p>
                   </div>
@@ -319,19 +394,19 @@ export default function MatrimonialVerticalPage() {
 
                 {/* Card body */}
                 <div className="flex flex-1 flex-col p-4">
-                  <p className={`text-sm font-semibold text-[#18181B] ${te ? "font-telugu" : ""}`}>
+                  <p className={`text-sm font-semibold text-[#18181B] line-clamp-2 min-h-[2.5rem] ${te ? "font-telugu" : ""}`}>
                     {te ? p.education.te : p.education.en}
                   </p>
-                  <p className={`mt-1.5 flex items-center gap-1 text-xs text-[#71717A] ${te ? "font-telugu" : ""}`}>
+                  <p className={`mt-2 flex items-center gap-1.5 text-xs text-[#71717A] ${te ? "font-telugu" : ""}`}>
                     <MapPin className="h-3.5 w-3.5 shrink-0 text-[#C2410C]" aria-hidden />
-                    {te ? "స్వస్థలం" : "Native"}: {te ? p.district.te : p.district.en}
+                    <span className="font-medium text-slate-500">{te ? "స్వస్థలం" : "Native"}:</span> {te ? p.district.te : p.district.en}
                   </p>
 
                   <a
                     href={`https://wa.me/919032654111?text=${encodeURIComponent(`నమస్కారం, నాయీ సమాఖ్య కల్యాణ వేదికలో ప్రొఫైల్ ID: ${p.uniqueId} (${p.district.te}) సంబంధం వివరాల కోసం సంప్రదిస్తున్నాను.`)}`}
                     target="_blank"
                     rel="noreferrer"
-                    className={`tap mt-auto pt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[#EBE8E0] bg-[#FFF7ED] px-3 py-2.5 text-xs font-bold text-[#C2410C] transition hover:border-[#C2410C] hover:bg-[#C2410C] hover:text-white ${te ? "font-telugu" : ""}`}
+                    className={`tap mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50/60 px-3 py-2.5 text-xs font-bold text-[#C2410C] transition duration-200 hover:border-[#C2410C] hover:bg-[#C2410C] hover:text-white ${te ? "font-telugu" : ""}`}
                   >
                     <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
                     {te
@@ -345,10 +420,13 @@ export default function MatrimonialVerticalPage() {
         </section>
 
         {/* Upcoming Parichaya Vedika */}
-        <section className="mt-10" aria-labelledby="events-heading">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C2410C]">
-            Parichaya Vedika
-          </p>
+        <section className="mt-12" aria-labelledby="events-heading">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2 w-2 rounded-full bg-[#C2410C]" />
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#C2410C]">
+              Parichaya Vedika
+            </p>
+          </div>
           <h2
             id="events-heading"
             className={`mt-1 text-xl font-bold text-[#18181B] ${te ? "font-telugu" : ""}`}
@@ -356,19 +434,25 @@ export default function MatrimonialVerticalPage() {
             {te ? "రాబోయే ప్రాంతీయ సమ్మేళనాల వివరాలు" : "Upcoming regional introduction meets"}
           </h2>
 
-          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
             {events.map((ev) => (
               <article
                 key={ev.id}
-                className="rounded-2xl border border-[#EBE8E0] bg-white p-5 shadow-sm"
+                className="rounded-2xl border border-amber-200/80 bg-white p-5 shadow-2xs transition-all hover:border-[#C2410C]/40 hover:shadow-md"
               >
-                <h3
-                  className={`text-base font-semibold text-[#18181B] ${te ? "font-telugu" : ""}`}
-                >
-                  {te ? ev.title.te : ev.title.en}
-                </h3>
-                <ul className="mt-3 space-y-2 text-sm text-[#71717A]">
-                  <li className={`flex items-start gap-2 ${te ? "font-telugu" : ""}`}>
+                <div className="flex items-start justify-between gap-2">
+                  <h3
+                    className={`text-base font-bold text-[#18181B] ${te ? "font-telugu" : ""}`}
+                  >
+                    {te ? ev.title.te : ev.title.en}
+                  </h3>
+                  <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                    ప్రత్యక్ష సమ్మేళనం
+                  </span>
+                </div>
+                
+                <ul className="mt-3.5 space-y-2 text-sm text-[#71717A]">
+                  <li className={`flex items-start gap-2 text-slate-800 font-medium ${te ? "font-telugu" : ""}`}>
                     <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-[#C2410C]" aria-hidden />
                     {te ? ev.date.te : ev.date.en}
                   </li>
@@ -378,19 +462,31 @@ export default function MatrimonialVerticalPage() {
                   </li>
                   <li className={`flex items-start gap-2 ${te ? "font-telugu" : ""}`}>
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#C2410C]" aria-hidden />
-                    {ev.phone}
+                    <span className="font-mono text-slate-700">{ev.phone}</span>
                   </li>
                 </ul>
-                <p
-                  className={`mt-4 inline-flex rounded-full border border-[#EBE8E0] bg-[#FFF7ED] px-3 py-1 text-xs font-medium text-[#C2410C] ${te ? "font-telugu" : ""}`}
-                >
-                  {te ? ev.deadline.te : ev.deadline.en}
-                </p>
+
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+                  <p
+                    className={`inline-flex rounded-full border border-amber-200 bg-[#FFF7ED] px-3 py-1 text-xs font-semibold text-[#C2410C] ${te ? "font-telugu" : ""}`}
+                  >
+                    {te ? ev.deadline.te : ev.deadline.en}
+                  </p>
+                  <a
+                    href="https://wa.me/919032654111?text=%E0%B0%A8%E0%B0%AE%E0%B0%B8%E0%B1%8D%E0%B0%95%E0%B0%BE%E0%B0%B0%E0%B0%82%2C%20%E0%B0%AA%E0%B0%B0%E0%B0%BF%E0%B0%9A%E0%B0%AF%20%E0%B0%B5%E0%B1%87%E0%B0%A6%E0%B0%BF%E0%B0%95%20%E0%B0%B8%E0%B0%AE%E0%B1%8D%E0%B0%AE%E0%B1%87%E0%B0%B3%E0%B0%A8%E0%B0%82%20%E0%B0%A8%E0%B0%AE%E0%B1%8B%E0%B0%A6%E0%B1%81%20%E0%B0%95%E0%B1%8B%E0%B0%B8%E0%B0%82%20%E0%B0%B8%E0%B0%82%E0%B0%AA%E0%B1%8D%E0%B0%B0%E0%B0%A6%E0%B0%BF%E0%B0%B8%E0%B1%8D%E0%B0%A4%E0%B1%81%E0%B0%A8%E0%B1%8D%E0%B0%A8%E0%B0%BE%E0%B0%A8%E0%B1%81"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs font-bold text-[#C2410C] hover:underline"
+                  >
+                    సమ్మేళన నమోదు &rarr;
+                  </a>
+                </div>
               </article>
             ))}
           </div>
         </section>
       </div>
     </div>
+
   );
 }
