@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   ChevronRight,
   Home,
@@ -41,40 +42,108 @@ const trustPillars = [
 
 const profiles = [
   {
-    id: "p1",
-    age: 28,
-    height: { te: "5'8\"", en: "5'8\"" },
-    education: { te: "B.Tech / సాఫ్ట్‌వేర్ ఇంజినీర్", en: "B.Tech / Software Engineer" },
-    wing: { te: "నాయీ", en: "Nayi" },
-    district: { te: "సూర్యాపేట", en: "Suryapet" },
-    initials: "వి",
+    id: "sample-1",
+    uniqueId: "NS-M1042",
+    age: 27,
+    height: { te: "5'9\"", en: "5'9\"" },
+    education: { te: "బి.టెక్ (సిఎస్ఇ) · లీడ్ క్లౌడ్ ఆర్కిటెక్ట్", en: "B.Tech (CSE) · Lead Cloud Architect" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "హైదరాబాద్", en: "Hyderabad" },
+    initials: "సాయి",
+    photoUrl: "/matrimony/profiles/groom-1.jpg",
+    gothra: { te: "కాశ్యప", en: "Kashyapa" },
+    badge: { te: "ఎన్ఎస్-ఐడీ ధృవీకృతం", en: "NS-ID Verified" },
   },
   {
-    id: "p2",
+    id: "sample-2",
+    uniqueId: "NS-F1043",
+    age: 24,
+    height: { te: "5'4\"", en: "5'4\"" },
+    education: { te: "ఎం.ఎస్సీ, బి.ఎడ్ · ప్రభుత్వ ఉపాధ్యాయురాలు", en: "M.Sc, B.Ed · Govt High School Teacher" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "వరంగల్", en: "Warangal" },
+    initials: "స్నేహ",
+    photoUrl: "/matrimony/profiles/bride-1.jpg",
+    gothra: { te: "భరద్వాజ", en: "Bharadwaja" },
+    badge: { te: "మండల వంశ ధృవీకృతం", en: "Mandal Lineage Verified" },
+  },
+  {
+    id: "sample-3",
+    uniqueId: "NS-M1044",
+    age: 29,
+    height: { te: "5'8\"", en: "5'8\"" },
+    education: { te: "బి.కామ్ · సెలూన్ వ్యవస్థాపకులు & వ్యాపారవేత్త", en: "B.Com · Salon Chain Founder & Entrepreneur" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "కరీంనగర్", en: "Karimnagar" },
+    initials: "రవిం",
+    photoUrl: "/matrimony/profiles/groom-2.jpg",
+    gothra: { te: "గౌతమ", en: "Gautama" },
+    badge: { te: "స్వయం ఉపాధి సాధకులు", en: "Enterprise Modernist" },
+  },
+  {
+    id: "sample-4",
+    uniqueId: "NS-F1045",
+    age: 23,
+    height: { te: "5'3\"", en: "5'3\"" },
+    education: { te: "బి.ఫార్మ్, ఎంబీఏ · హెల్త్‌కేర్ ఎగ్జిక్యూటివ్", en: "B.Pharm, MBA · Healthcare Executive" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "నల్గొండ", en: "Nalgonda" },
+    initials: "అనన్య",
+    photoUrl: "/matrimony/profiles/bride-2.jpg",
+    gothra: { te: "వశిష్ట", en: "Vashishta" },
+    badge: { te: "ఎన్ఎస్-ఐడీ ధృవీకృతం", en: "NS-ID Verified" },
+  },
+  {
+    id: "sample-5",
+    uniqueId: "NS-M1046",
+    age: 28,
+    height: { te: "5'10\"", en: "5'10\"" },
+    education: { te: "బి.టెక్ · సివిల్ కాంట్రాక్టర్ & ఇంటీరియర్ డిజైనర్", en: "B.Tech · Civil Contractor & Interior Designer" },
+    wing: { te: "భజంత్రి / నాయీ", en: "Bajantri / Nayi" },
+    district: { te: "ఖమ్మం", en: "Khammam" },
+    initials: "మాధవ్",
+    photoUrl: "/matrimony/profiles/groom-3.jpg",
+    gothra: { te: "ఆత్రేయ", en: "Athreya" },
+    badge: { te: "కమ్యూనిటీ వెరిఫైడ్", en: "Community Verified" },
+  },
+  {
+    id: "sample-6",
+    uniqueId: "NS-F1047",
+    age: 25,
+    height: { te: "5'5\"", en: "5'5\"" },
+    education: { te: "ఎంసిఎ · సీనియర్ ఐటీ సిస్టమ్స్ అనలిస్ట్", en: "MCA · Senior IT Systems Analyst" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "విశాఖపట్నం", en: "Visakhapatnam" },
+    initials: "దివ్య",
+    photoUrl: "/matrimony/profiles/bride-3.jpg",
+    gothra: { te: "శాండిల్య", en: "Sandilya" },
+    badge: { te: "ఎన్ఎస్-ఐడీ ధృవీకృతం", en: "NS-ID Verified" },
+  },
+  {
+    id: "sample-7",
+    uniqueId: "NS-M1048",
+    age: 30,
+    height: { te: "5'11\"", en: "5'11\"" },
+    education: { te: "ఎం.టెక్ · సీనియర్ డేటా సైంటిస్ట్", en: "M.Tech · Senior Data Scientist" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "రంగారెడ్డి", en: "Rangareddy" },
+    initials: "వంశీ",
+    photoUrl: "/matrimony/profiles/groom-4.jpg",
+    gothra: { te: "కౌండిన్య", en: "Kaundinya" },
+    badge: { te: "మండల వంశ ధృవీకృతం", en: "Mandal Lineage Verified" },
+  },
+  {
+    id: "sample-8",
+    uniqueId: "NS-F1049",
     age: 26,
     height: { te: "5'4\"", en: "5'4\"" },
-    education: { te: "MBA / బ్యాంక్ అధికారి", en: "MBA / Bank Officer" },
-    wing: { te: "నాయీ", en: "Nayi" },
-    district: { te: "ఖమ్మం", en: "Khammam" },
-    initials: "శ్రీ",
-  },
-  {
-    id: "p3",
-    age: 31,
-    height: { te: "5'7\"", en: "5'7\"" },
-    education: { te: "ప్రభుత్వ ఉపాధ్యాయుడు", en: "Govt Teacher" },
-    wing: { te: "భజంత్రి", en: "Bajantri" },
-    district: { te: "గుంటూరు", en: "Guntur" },
-    initials: "రా",
-  },
-  {
-    id: "p4",
-    age: 29,
-    height: { te: "5'6\"", en: "5'6\"" },
-    education: { te: "సెలూన్ వ్యవస్థాపకురాలు", en: "Salon Entrepreneur" },
-    wing: { te: "నాయీ", en: "Nayi" },
-    district: { te: "ఖమ్మం", en: "Khammam" },
-    initials: "ల",
+    education: { te: "ఎంబీబీఎస్ · రెసిడెంట్ మెడికల్ ఆఫీసర్ (వైద్యురాలు)", en: "MBBS · Resident Medical Officer" },
+    wing: { te: "నాయీ బ్రాహ్మణ", en: "Nayi Brahmin" },
+    district: { te: "సిద్దిపేట", en: "Siddipet" },
+    initials: "హరిత",
+    photoUrl: "/matrimony/profiles/bride-4.jpg",
+    gothra: { te: "విశ్వామిత్ర", en: "Vishwamitra" },
+    badge: { te: "వైద్య రంగ ధృవీకృతం", en: "Doctor Verified" },
   },
 ] as const;
 
@@ -177,7 +246,7 @@ export default function MatrimonialVerticalPage() {
         {/* Action strip */}
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
-            href="https://wa.me/919876543210?text=%E0%B0%A8%E0%B0%AE%E0%B0%B8%E0%B1%8D%E0%B0%95%E0%B0%BE%E0%B0%B0%E0%B0%82%2C%20%E0%B0%AC%E0%B0%AF%E0%B1%8B%E0%B0%A1%E0%B1%87%E0%B0%9F%E0%B0%BE%20%E0%B0%A8%E0%B0%AE%E0%B1%8B%E0%B0%A6%E0%B1%81%20%E0%B0%95%E0%B0%BE%E0%B0%B5%E0%B0%BE%E0%B0%B2%E0%B0%BF"
+            href="https://wa.me/919032654111?text=%E0%B0%A8%E0%B0%AE%E0%B0%B8%E0%B1%8D%E0%B0%95%E0%B0%BE%E0%B0%B0%E0%B0%82%2C%20%E0%B0%AC%E0%B0%AF%E0%B1%8B%E0%B0%A1%E0%B1%87%E0%B0%9F%E0%B0%BE%20%E0%B0%A8%E0%B0%AE%E0%B1%8B%E0%B0%A6%E0%B1%81%20%E0%B0%95%E0%B0%BE%E0%B0%B5%E0%B0%BE%E0%B0%B2%E0%B0%BF"
             target="_blank"
             rel="noreferrer"
             className={`tap inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[#C2410C] px-5 py-3.5 text-sm font-semibold text-white hover:bg-[#9A3412] ${te ? "font-telugu" : ""}`}
@@ -210,41 +279,66 @@ export default function MatrimonialVerticalPage() {
             {te ? "ధృవీకృత ప్రొఫైల్ మునుజూపు" : "Featured verified profile previews"}
           </h2>
 
-          <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {profiles.map((p) => (
               <article
                 key={p.id}
-                className="flex flex-col rounded-2xl border border-[#EBE8E0] bg-white p-5 shadow-sm"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#EBE8E0] bg-white shadow-sm transition-all duration-300 hover:border-[#C2410C]/40 hover:shadow-md"
               >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#EBE8E0] bg-[#FFF7ED] font-telugu text-lg font-semibold text-[#C2410C]">
-                    {p.initials}
-                  </div>
-                  <div>
-                    <p className="metric-tnum text-sm font-bold text-[#18181B]">
-                      {p.age} {te ? "సం." : "yrs"} · {te ? p.height.te : p.height.en}
-                    </p>
-                    <span className="mt-0.5 inline-flex rounded-full border border-[#EBE8E0] bg-[#F4F2EB] px-2 py-0.5 text-[10px] font-semibold text-[#71717A]">
-                      {te ? p.wing.te : p.wing.en}
+                {/* Photo frame */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+                  <Image
+                    src={p.photoUrl}
+                    alt={p.uniqueId}
+                    fill
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+                  
+                  {/* Top badges */}
+                  <div className="absolute inset-x-2 top-2 flex items-center justify-between gap-1 text-[10px] font-bold">
+                    <span className="rounded-md border border-amber-400/40 bg-black/60 px-2 py-0.5 font-mono text-amber-300 backdrop-blur-xs">
+                      {p.uniqueId}
+                    </span>
+                    <span className="rounded-md border border-emerald-400/40 bg-emerald-950/80 px-2 py-0.5 text-emerald-200 backdrop-blur-xs">
+                      {te ? p.badge.te : p.badge.en}
                     </span>
                   </div>
+
+                  {/* Bottom overlay text */}
+                  <div className="absolute inset-x-3 bottom-2 text-white">
+                    <p className="text-base font-bold drop-shadow-md">
+                      {p.age} {te ? "సంవత్సరాలు" : "Years"} · {te ? p.height.te : p.height.en}
+                    </p>
+                    <p className="text-xs text-amber-200/90 drop-shadow-sm">
+                      {te ? p.gothra.te : p.gothra.en} గోత్రం · {te ? p.wing.te : p.wing.en}
+                    </p>
+                  </div>
                 </div>
-                <p className={`mt-3 text-sm text-[#18181B] ${te ? "font-telugu" : ""}`}>
-                  {te ? p.education.te : p.education.en}
-                </p>
-                <p className={`mt-1 text-xs text-[#71717A] ${te ? "font-telugu" : ""}`}>
-                  {te ? "స్వస్థలం" : "Native"}: {te ? p.district.te : p.district.en}
-                </p>
-                <a
-                  href="https://wa.me/919876543210?text=%E0%B0%95%E0%B1%81%E0%B0%9F%E0%B1%81%E0%B0%82%E0%B0%AC%20%E0%B0%B5%E0%B0%BF%E0%B0%B5%E0%B0%B0%E0%B0%BE%E0%B0%B2%20%E0%B0%95%E0%B1%8B%E0%B0%B8%E0%B0%82"
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`tap mt-4 inline-flex w-full items-center justify-center rounded-full border border-[#EBE8E0] bg-[#FBFBF9] px-3 py-2.5 text-xs font-semibold text-[#C2410C] hover:border-[#C2410C]/40 hover:bg-[#FFF7ED] ${te ? "font-telugu" : ""}`}
-                >
-                  {te
-                    ? "కుటుంబ వివరాల కోసం సంప్రదించండి"
-                    : "Contact for family details"}
-                </a>
+
+                {/* Card body */}
+                <div className="flex flex-1 flex-col p-4">
+                  <p className={`text-sm font-semibold text-[#18181B] ${te ? "font-telugu" : ""}`}>
+                    {te ? p.education.te : p.education.en}
+                  </p>
+                  <p className={`mt-1.5 flex items-center gap-1 text-xs text-[#71717A] ${te ? "font-telugu" : ""}`}>
+                    <MapPin className="h-3.5 w-3.5 shrink-0 text-[#C2410C]" aria-hidden />
+                    {te ? "స్వస్థలం" : "Native"}: {te ? p.district.te : p.district.en}
+                  </p>
+
+                  <a
+                    href={`https://wa.me/919032654111?text=${encodeURIComponent(`నమస్కారం, నాయీ సమాఖ్య కల్యాణ వేదికలో ప్రొఫైల్ ID: ${p.uniqueId} (${p.district.te}) సంబంధం వివరాల కోసం సంప్రదిస్తున్నాను.`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`tap mt-auto pt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[#EBE8E0] bg-[#FFF7ED] px-3 py-2.5 text-xs font-bold text-[#C2410C] transition hover:border-[#C2410C] hover:bg-[#C2410C] hover:text-white ${te ? "font-telugu" : ""}`}
+                  >
+                    <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                    {te
+                      ? "సంబంధం వివరాలు & జాతకం అడగండి"
+                      : "Request horoscope & family details"}
+                  </a>
+                </div>
               </article>
             ))}
           </div>
