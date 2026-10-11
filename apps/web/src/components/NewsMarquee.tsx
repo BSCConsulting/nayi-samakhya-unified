@@ -8,12 +8,12 @@ export function NewsMarquee() {
 
   return (
     <div
-      className="no-print overflow-hidden border-b border-[#EBE8E0] bg-[#C2410C]/10 text-[#C2410C]"
+      className="no-print overflow-hidden border-b border-amber-900/10 bg-[#0F172A] text-amber-300"
       role="region"
       aria-label="Breaking updates"
     >
       <div
-        className={`marquee-track flex w-max whitespace-nowrap py-2 text-sm font-medium ${language === "te" ? "font-telugu" : ""}`}
+        className={`marquee-track flex w-max whitespace-nowrap py-1.5 text-xs font-medium tracking-wide ${language === "te" ? "font-telugu" : ""}`}
       >
         <span className="px-4">{ticker}</span>
         <span className="px-4" aria-hidden>

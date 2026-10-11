@@ -21,14 +21,14 @@ import { TELEGRAM_BOT_URL } from "@/lib/data/communityAnnounce";
 import { cn } from "@/lib/utils";
 
 const primaryNav = [
-  { href: "/districts", key: "navDistricts" as const, style: "plain" as const },
-  { href: "/survey", key: "navSurvey" as const, style: "survey" as const },
-  { href: "/grievance", key: "navGrievance" as const, style: "go23" as const },
+  { href: "/districts", key: "navDistrictsShort" as const, style: "plain" as const },
+  { href: "/survey", key: "navSurveyShort" as const, style: "survey" as const },
   {
     href: "/representation",
     key: "navRepresentation" as const,
     style: "plain" as const,
   },
+  { href: "/grievance", key: "navGrievanceShort" as const, style: "go23" as const },
   { href: "/feed", key: "navGazette" as const, style: "plain" as const },
 ];
 

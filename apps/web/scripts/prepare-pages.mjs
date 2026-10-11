@@ -79,7 +79,38 @@ if (fs.existsSync(matrimonyNext)) {
   console.log("Merged Matrimony Portal assets into .next/matrimony.");
 }
 
-// 5. Clean up large caches to guarantee < 25 MiB compliance
+// 5. Cloudflare Pages Clean URL Mirroring:
+// Ensure every X.html has a corresponding X/index.html, and every X/index.html has X.html
+function mirrorHtmlRoutes(dir, base = "") {
+  if (!fs.existsSync(dir)) return;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "_next" || entry.name === "cache" || entry.name === "dev") continue;
+      const indexFile = path.join(fullPath, "index.html");
+      const siblingHtml = path.join(dir, `${entry.name}.html`);
+      if (fs.existsSync(indexFile) && !fs.existsSync(siblingHtml)) {
+        fs.copyFileSync(indexFile, siblingHtml);
+      }
+      mirrorHtmlRoutes(fullPath, path.join(base, entry.name));
+    } else if (entry.isFile() && entry.name.endsWith(".html") && entry.name !== "index.html" && entry.name !== "404.html") {
+      const routeName = entry.name.slice(0, -5);
+      const subDir = path.join(dir, routeName);
+      const subIndex = path.join(subDir, "index.html");
+      if (!fs.existsSync(subDir)) {
+        fs.mkdirSync(subDir, { recursive: true });
+      }
+      if (!fs.existsSync(subIndex)) {
+        fs.copyFileSync(fullPath, subIndex);
+      }
+    }
+  }
+}
+mirrorHtmlRoutes(nextDir);
+console.log("Completed HTML route mirroring for Cloudflare Pages.");
+
+// 6. Clean up large caches to guarantee < 25 MiB compliance
 for (const dirToClean of [path.join(nextDir, "cache"), path.join(nextDir, "dev")]) {
   if (fs.existsSync(dirToClean)) {
     fs.rmSync(dirToClean, { recursive: true, force: true });

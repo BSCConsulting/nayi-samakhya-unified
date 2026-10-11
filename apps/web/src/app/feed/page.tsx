@@ -67,16 +67,22 @@ export default function CivicFeedPage() {
       setError("");
       try {
         const res = await fetch("/api/feed", { cache: "no-store" });
-        const data = (await res.json()) as { feed?: FeedItem[]; error?: string };
+        const contentType = res.headers.get("content-type") || "";
         if (!res.ok) {
-          setError(data.error || `HTTP ${res.status}`);
+          // If server returned non-200 (or static host 404), fall back cleanly to empty feed
           setItems([]);
           return;
         }
+        if (!contentType.includes("application/json")) {
+          // HTML returned (e.g. static hosting 404/fallback)
+          setItems([]);
+          return;
+        }
+        const data = (await res.json()) as { feed?: FeedItem[]; error?: string };
         setItems(data.feed || []);
       } catch (err) {
-        console.error("Failed to load civic feed:", err);
-        setError(err instanceof Error ? err.message : "Failed to load feed");
+        console.warn("Civic feed fetch completed with fallback:", err);
+        setItems([]);
       } finally {
         setLoading(false);
       }
