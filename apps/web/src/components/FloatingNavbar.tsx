@@ -273,6 +273,13 @@ export function FloatingNavbar() {
               <Scissors className="h-3 w-3 shrink-0" aria-hidden />
               {t("navSalonHub")}
             </Link>
+            <Link
+              href="/welfare/salon-schemes"
+              className={`tap hidden items-center gap-1.5 rounded-full border border-amber-600/40 bg-amber-500/15 px-2.5 py-1.5 text-[11px] font-bold text-amber-900 transition hover:bg-amber-500/25 lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
+            >
+              <span>⚡</span>
+              {isTe ? "సంక్షేమ పథకాలు" : "Salon Welfare"}
+            </Link>
             <CompetitionsMenu className="hidden shrink-0 xl:block" />
             <button
               type="button"
@@ -389,6 +396,16 @@ export function FloatingNavbar() {
                   >
                     <Scissors className="h-4 w-4" aria-hidden />
                     {t("navSalonHub")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/welfare/salon-schemes"
+                    onClick={() => setOpen(false)}
+                    className="tap flex min-h-12 items-center gap-2 rounded-xl border border-amber-500/35 bg-amber-500/10 px-3 font-telugu text-sm font-bold text-amber-900"
+                  >
+                    <span>⚡</span>
+                    {isTe ? "సెలూన్ సంక్షేమ పథకాలు (250 యూనిట్లు & PM విశ్వకర్మ)" : "Salon Welfare Schemes"}
                   </Link>
                 </li>
                 {primaryNav.map((link) => (

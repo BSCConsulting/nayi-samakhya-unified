@@ -206,6 +206,11 @@ export function CivicFooter() {
                   {t("navSalonHub")}
                 </FooterNavLink>
               </li>
+              <li>
+                <FooterNavLink href="/welfare/salon-schemes" icon={Zap}>
+                  {isTe ? "సెలూన్ సంక్షేమ పథకాలు (250 యూనిట్లు & PM విశ్వకర్మ)" : "Salon Welfare Schemes (Free Power & Vishwakarma)"}
+                </FooterNavLink>
+              </li>
             </ul>
           </div>
 

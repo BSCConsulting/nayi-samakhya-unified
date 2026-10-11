@@ -226,6 +226,53 @@ export default function HelpCentersPage() {
         </div>
       </div>
 
+      {/* Cross-Link Banner: Salon Welfare & Enterprise Schemes */}
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%)',
+          borderRadius: '16px',
+          border: '1.5px solid #F59E0B',
+          padding: '1.25rem 1.5rem',
+          marginBottom: '2.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          boxShadow: '0 4px 14px rgba(245, 158, 11, 0.12)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>⚡</span>
+          <div>
+            <h3 style={{ margin: '0 0 0.25rem', fontSize: '1.05rem', color: '#92400E', fontWeight: 800 }}>
+              సెలూన్ యజమానులకు గమనిక: 250 యూనిట్ల ఉచిత విద్యుత్ & PM విశ్వకర్మ
+            </h3>
+            <p style={{ margin: 0, fontSize: '0.85rem', color: '#B45309' }}>
+              జీవో 23 ఉచిత కరెంట్ అర్హత క్యాలిక్యులేటర్ మరియు ₹15,000 టూల్కిట్ గ్రాంట్ వివరాల కోసం ఇక్కడ చూడండి.
+            </p>
+          </div>
+        </div>
+        <a
+          href="https://www.nayisamakhya.org/welfare/salon-schemes"
+          style={{
+            background: '#801426',
+            color: '#FFFFFF',
+            fontWeight: 800,
+            fontSize: '0.86rem',
+            padding: '0.65rem 1.25rem',
+            borderRadius: '10px',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            boxShadow: '0 2px 8px rgba(128, 20, 38, 0.2)',
+          }}
+        >
+          <span>వివరాలు చూడండి →</span>
+        </a>
+      </div>
+
       {/* Services Grid */}
       <div style={{ marginBottom: '2.5rem' }}>
         <h2 style={{ fontSize: '1.4rem', color: '#801426', textAlign: 'center', marginBottom: '1.25rem' }}>
