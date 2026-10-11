@@ -2,21 +2,11 @@
 const nextConfig = {
   // Non-Negotiable Law 1: Must execute under path-routed sub-directory /matrimony
   basePath: '/matrimony',
+  trailingSlash: false,
   reactStrictMode: true,
   poweredByHeader: false,
   output: process.env.DOCKER_BUILD ? 'standalone' : undefined,
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/matrimony',
-        basePath: false,
-        permanent: false,
-      },
-    ];
-  },
   async headers() {
-
     return [
       {
         source: '/:path*',

@@ -40,7 +40,7 @@ if (fs.existsSync(publicDir)) {
   console.log("Copied public assets to .next root.");
 }
 
-// 4b. Merge built Matrimony Portal assets (if built) into .next/matrimony
+// 4b. Merge built Matrimony Portal assets (if built) into .next/matrimony AND .next/matrimony.html
 const matrimonyNext = path.resolve(webDir, "../matrimony/.next");
 const matrimonyPublic = path.resolve(webDir, "../matrimony/public");
 const matrimonyTargetDir = path.join(nextDir, "matrimony");
@@ -67,13 +67,13 @@ if (fs.existsSync(matrimonyNext)) {
     fs.cpSync(matrimonyPublic, matrimonyTargetDir, { recursive: true });
   }
 
-  // Copy matrimony/index.html to .next/matrimony.html
-  // Cloudflare Pages serves .next/matrimony.html directly when /matrimony is requested.
+  // In Cloudflare Pages, requests for /matrimony (no trailing slash) look for .next/matrimony.html or .next/matrimony/index.html.
+  // Having both guarantees instant resolution without redirect loops.
   const matIndexHtml = path.join(matrimonyTargetDir, "index.html");
   const matRootHtml = path.join(nextDir, "matrimony.html");
   if (fs.existsSync(matIndexHtml)) {
     fs.copyFileSync(matIndexHtml, matRootHtml);
-    console.log("Mapped matrimony/index.html to .next/matrimony.html for extensionless routing.");
+    console.log("Mapped matrimony/index.html to .next/matrimony.html for zero-redirect resolution.");
   }
 
   console.log("Merged Matrimony Portal assets into .next/matrimony.");
