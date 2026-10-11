@@ -3,8 +3,7 @@ import { Cormorant_Garamond, Noto_Sans_Telugu } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
 
-// Per-request CSP nonces only work on dynamically rendered pages.
-export const dynamic = 'force-dynamic';
+// Static-compatible layout; dynamic routes configure themselves individually.
 
 // next/font self-hosts at build time: no runtime request to a font CDN (CSP font-src 'self').
 const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '700'], variable: '--font-display', display: 'swap' });

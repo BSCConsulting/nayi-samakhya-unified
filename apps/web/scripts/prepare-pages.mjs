@@ -40,6 +40,36 @@ if (fs.existsSync(publicDir)) {
   console.log("Copied public assets to .next root.");
 }
 
+// 4b. Merge built Matrimony Portal assets (if built) into .next/matrimony
+const matrimonyNext = path.resolve(webDir, "../matrimony/.next");
+const matrimonyPublic = path.resolve(webDir, "../matrimony/public");
+const matrimonyTargetDir = path.join(nextDir, "matrimony");
+
+if (fs.existsSync(matrimonyNext)) {
+  fs.mkdirSync(matrimonyTargetDir, { recursive: true });
+  
+  // Copy matrimony server/app static HTML
+  const matApp = path.join(matrimonyNext, "server", "app");
+  if (fs.existsSync(matApp)) {
+    fs.cpSync(matApp, matrimonyTargetDir, { recursive: true });
+  }
+
+  // Copy matrimony static chunks to .next/matrimony/_next/static
+  const matStatic = path.join(matrimonyNext, "static");
+  const matStaticTarget = path.join(matrimonyTargetDir, "_next", "static");
+  fs.mkdirSync(path.join(matrimonyTargetDir, "_next"), { recursive: true });
+  if (fs.existsSync(matStatic)) {
+    fs.cpSync(matStatic, matStaticTarget, { recursive: true });
+  }
+
+  // Copy matrimony public assets
+  if (fs.existsSync(matrimonyPublic)) {
+    fs.cpSync(matrimonyPublic, matrimonyTargetDir, { recursive: true });
+  }
+
+  console.log("Merged Matrimony Portal assets into .next/matrimony.");
+}
+
 // 5. Clean up large caches to guarantee < 25 MiB compliance
 for (const dirToClean of [path.join(nextDir, "cache"), path.join(nextDir, "dev")]) {
   if (fs.existsSync(dirToClean)) {
