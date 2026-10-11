@@ -243,7 +243,7 @@ export function FloatingNavbar() {
           </Link>
 
           <nav
-            className="no-scrollbar hidden min-w-0 flex-1 items-center justify-end gap-1.5 overflow-x-auto overscroll-x-contain touch-pan-x lg:flex"
+            className="no-scrollbar hidden min-w-0 flex-1 items-center justify-end gap-1 overflow-x-auto overscroll-x-contain touch-pan-x lg:flex"
             aria-label="Primary"
           >
             {primaryNav.map((link) => (
@@ -251,61 +251,53 @@ export function FloatingNavbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "inline-flex shrink-0 items-center rounded-lg px-2.5 py-2 text-[12px] font-medium transition-colors hover:bg-[#F4F2EB]",
+                  "inline-flex shrink-0 items-center rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900",
                   language === "te" ? "font-telugu" : "",
-                  link.style === "go23"
-                    ? "border border-amber-500/35 bg-amber-500/10 text-amber-900 hover:bg-amber-500/20"
-                    : "text-ink",
                 )}
               >
                 {t(link.key)}
-                {link.style === "survey" ? <NewBadge /> : null}
-                {link.style === "go23" ? <Go23Badge /> : null}
+                {link.style === "survey" ? (
+                  <span className="ml-1.5 inline-flex items-center rounded-full bg-amber-100 px-1.5 py-0.2 font-mono text-[9px] font-bold text-amber-800">
+                    Live
+                  </span>
+                ) : null}
               </Link>
             ))}
+            <Link
+              href="/matrimony"
+              className={cn(
+                "inline-flex shrink-0 items-center rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900",
+                language === "te" ? "font-telugu" : "",
+              )}
+            >
+              {language === "te" ? "వివాహ వేదిక" : "Matrimony"}
+            </Link>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-1.5 self-center">
-            <Link
-              href="/salon-hub"
-              className={`tap hidden items-center gap-1.5 rounded-full border border-[#B45309]/35 bg-[#B45309]/10 px-2.5 py-1.5 text-[11px] font-bold text-[#B45309] transition hover:bg-[#B45309]/15 xl:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
-            >
-              <Scissors className="h-3 w-3 shrink-0" aria-hidden />
-              {t("navSalonHub")}
-            </Link>
+          <div className="flex shrink-0 items-center gap-2 self-center">
             <Link
               href="/welfare/salon-schemes"
-              className={`tap hidden items-center gap-1.5 rounded-full border border-amber-600/40 bg-amber-500/15 px-2.5 py-1.5 text-[11px] font-bold text-amber-900 transition hover:bg-amber-500/25 lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
+              className={`tap hidden items-center gap-1.5 rounded-lg border border-amber-300/70 bg-amber-50/80 px-2.5 py-1.5 text-xs font-semibold text-amber-900 transition hover:bg-amber-100/90 lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
             >
-              <span>⚡</span>
-              {isTe ? "సంక్షేమ పథకాలు" : "Salon Welfare"}
+              <span className="text-amber-600">⚡</span>
+              {isTe ? "సంక్షేమ పథకాలు" : "Welfare Hub"}
             </Link>
-            <CompetitionsMenu className="hidden shrink-0 xl:block" />
+
             <button
               type="button"
               onClick={() => setLanguage(language === "te" ? "en" : "te")}
-              className="tap hidden h-9 items-center rounded-full border border-[#B45309]/25 bg-[#B45309]/10 px-3 font-telugu text-[11px] font-bold text-[#B45309] md:inline-flex"
-              aria-label="Language"
+              className="tap hidden h-8 items-center rounded-lg border border-slate-200 bg-white px-2.5 font-sans text-xs font-bold text-slate-700 transition hover:bg-slate-50 md:inline-flex"
+              aria-label="Language switch"
             >
-              {language === "te" ? "తె" : "EN"}
+              {language === "te" ? "English" : "తెలుగు"}
             </button>
-
-            <a
-              href={TELEGRAM_BOT_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="tap hidden h-10 w-10 items-center justify-center rounded-xl border border-line bg-white text-[#0F172A] hover:bg-warm xl:inline-flex"
-              aria-label="Telegram desk bot"
-              title="@NayiSamakhyaDeskBot"
-            >
-              <Send className="h-4 w-4" aria-hidden />
-            </a>
 
             <Link
               href="/survey"
-              className={`tap hidden items-center gap-1 rounded-xl bg-[#B45309] px-3.5 py-2.5 text-[12px] font-bold text-white shadow-[0_0_14px_rgba(180,83,9,0.28)] transition hover:bg-[#92400E] lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
+              className={`tap hidden items-center gap-1.5 rounded-lg bg-[#C2410C] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs transition hover:bg-[#9A3412] lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
             >
-              {t("navCtaSurvey")}
+              <span>{t("navCtaSurvey")}</span>
+              <span aria-hidden>&rarr;</span>
             </Link>
 
             <div className="hidden md:block lg:hidden">
@@ -313,7 +305,7 @@ export function FloatingNavbar() {
             </div>
             <button
               type="button"
-              className="tap inline-flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-white text-ink hover:bg-warm lg:hidden"
+              className="tap inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 lg:hidden"
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-label={t("menu")}

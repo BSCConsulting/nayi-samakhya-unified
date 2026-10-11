@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
@@ -10,10 +11,17 @@ import {
   Minus,
   Send,
   X,
+  ArrowLeft,
+  Heart,
+  HelpCircle,
+  Search,
+  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
-import { useLanguageStore, useMandalPrefStore } from "@/lib/store/preferences";
+import { useLanguageStore } from "@/lib/store/preferences";
 import type { Lang } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { BOT_FAQS, type BotFaqItem } from "@/lib/bot-faq-data";
 
 type Msg = {
   id: string;
@@ -21,66 +29,34 @@ type Msg = {
   text: string;
   linkHref?: string;
   linkLabel?: string;
+  isFaqList?: boolean;
 };
 
-type Flow = "none" | "power" | "grievance-mandal" | "grievance-name" | "grievance-text";
+type Flow = "none" | "power" | "grievance-mandal" | "grievance-name" | "grievance-text" | "matrimony-faq";
 
 function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-function RangoliBorder({ position }: { position: "top" | "bottom" }) {
+function CulturalEmblemArt() {
   return (
-    <div
-      className={cn(
-        "pointer-events-none absolute left-0 right-0 h-8 opacity-70",
-        position === "top" ? "top-0" : "bottom-0",
-      )}
-      aria-hidden
-      style={{
-        backgroundImage:
-          "radial-gradient(circle at 8px 8px, #E8732A 1.5px, transparent 1.8px), radial-gradient(circle at 24px 16px, #D94F2B 1.2px, transparent 1.5px), radial-gradient(circle at 40px 6px, #F5A623 1.4px, transparent 1.7px)",
-        backgroundSize: "48px 24px",
-        backgroundRepeat: "repeat-x",
-        transform: position === "bottom" ? "scaleY(-1)" : undefined,
-      }}
-    />
-  );
-}
-
-function NamaskaramArt() {
-  return (
-    <svg
-      className="mx-auto h-16 w-16 text-[#D94F2B]"
-      viewBox="0 0 64 64"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      {/* Left prayer hand */}
-      <path d="M28 18c-1.2-4.5-3.8-7-6.5-7-3.2 0-5.5 3.2-5.5 7.5V34c0 2.2 1.5 3.5 3.2 3.5 1.4 0 2.6-.8 3.3-2.1" />
-      <path d="M22 16.5c-.2-2.8-1.6-4.8-3.4-4.8-2.2 0-3.8 2.4-3.8 5.6V31" />
-      <path d="M19 15c-.1-2.2-1.2-3.8-2.7-3.8-1.8 0-3.1 2-3.1 4.6v13.2" />
-      <path d="M28 34.5c0 6.5-2.8 12.5-6.5 16.2" />
-      {/* Right prayer hand (mirrored) */}
-      <path d="M36 18c1.2-4.5 3.8-7 6.5-7 3.2 0 5.5 3.2 5.5 7.5V34c0 2.2-1.5 3.5-3.2 3.5-1.4 0-2.6-.8-3.3-2.1" />
-      <path d="M42 16.5c.2-2.8 1.6-4.8 3.4-4.8 2.2 0 3.8 2.4 3.8 5.6V31" />
-      <path d="M45 15c.1-2.2 1.2-3.8 2.7-3.8 1.8 0 3.1 2 3.1 4.6v13.2" />
-      <path d="M36 34.5c0 6.5 2.8 12.5 6.5 16.2" />
-      {/* Palms meeting */}
-      <path d="M28 22v16c0 2.5 1.8 4 4 4s4-1.5 4-4V22" />
-      <path d="M30 52h4" />
-    </svg>
+    <div className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border-2 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-100 p-2 shadow-md">
+      <Image
+        src="/matrimony/matrimony-emblem.png"
+        alt="నాయీ సమాఖ్య అధికారిక చిహ్నం"
+        width={64}
+        height={64}
+        className="h-full w-full object-contain"
+        priority
+      />
+    </div>
   );
 }
 
 function SealWatermark() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 m-auto h-64 w-64 opacity-5"
+      className="pointer-events-none absolute inset-0 m-auto h-64 w-64 opacity-[0.04]"
       aria-hidden
     >
       <div className="flex h-full w-full items-center justify-center rounded-full border-[10px] border-[#D94F2B]">
@@ -93,10 +69,7 @@ function SealWatermark() {
 export function CivicChatbot() {
   const siteLang = useLanguageStore((s) => s.lang);
   const setSiteLang = useLanguageStore((s) => s.setLang);
-  const districtSlug = useMandalPrefStore((s) => s.districtSlug);
-  const mandalSlug = useMandalPrefStore((s) => s.mandalSlug);
-  const activeHub = `/${districtSlug}/${mandalSlug}`;
-  const surveyHref = `${activeHub}/survey`;
+  const surveyHref = "/survey";
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
@@ -107,26 +80,35 @@ export function CivicChatbot() {
   const [draft, setDraft] = useState({ mandal: "", name: "" });
   const [showActions, setShowActions] = useState(true);
   const [listening, setListening] = useState(false);
+  const [faqCategory, setFaqCategory] = useState<string>("ALL");
+  const [faqSearch, setFaqSearch] = useState("");
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open || !scrollerRef.current) return;
     scrollerRef.current.scrollTop = scrollerRef.current.scrollHeight;
-  }, [messages, open, botLang, showActions]);
+  }, [messages, open, botLang, showActions, flow]);
 
   function pickLanguage(next: Lang) {
     setBotLang(next);
     setSiteLang(next);
+    resetToMainMenu(next);
+  }
+
+  function resetToMainMenu(langOverride?: Lang) {
+    const lang = langOverride ?? botLang ?? "te";
     setFlow("none");
     setShowActions(true);
+    setFaqCategory("ALL");
+    setFaqSearch("");
     setMessages([
       {
         id: uid(),
         role: "bot",
         text:
-          next === "te"
-            ? "నమస్కారం! నేను సమాఖ్య మిత్రను. మీకు ఏ సేవ కావాలో క్రింది బటన్ల ద్వారా ఎంచుకోండి:"
-            : "How can I help you today? Please choose the service you need:",
+          lang === "te"
+            ? "నమస్కారం! నేను సమాఖ్య మిత్రను. ప్రజా సేవలు, ఉచిత విద్యుత్, వివాహ వేదిక లేదా సర్వే కొరకు క్రింది విభాగాన్ని ఎంచుకోండి:"
+            : "Welcome to Samakhya Seva Mitra! Please choose a service, check power status, explore matrimony FAQs, or start the survey:",
       },
     ]);
   }
@@ -149,8 +131,8 @@ export function CivicChatbot() {
     push(label, {
       text:
         botLang === "te"
-          ? "దయచేసి మీ 9 అంకెల USC / మీటర్ నంబర్ నమోదు చేయండి."
-          : "Please enter your 9-digit USC / Meter number.",
+          ? "దయచేసి మీ 9 అంకెల USC / మీటర్ నంబర్ నమోదు చేయండి. (నమూనా: 123456789)"
+          : "Please enter your 9-digit USC / Meter number. (Sample demo: 123456789)",
     });
   }
 
@@ -165,8 +147,8 @@ export function CivicChatbot() {
     push(label, {
       text:
         botLang === "te"
-          ? "మీ మండలం పేరు రాయండి (ఉదా: కోదాడ)."
-          : "Enter your mandal name (e.g. Kodad).",
+          ? "మీ మండలం పేరు రాయండి (ఉదా: కోదాడ, హనుమకొండ)."
+          : "Enter your mandal name (e.g. Kodad, Hanumakonda).",
     });
   }
 
@@ -178,60 +160,32 @@ export function CivicChatbot() {
     push(label, {
       text:
         botLang === "te"
-          ? "కుటుంబ సర్వే ప్రారంభించడానికి క్రింది బటన్ నొక్కండి."
-          : "Tap the button below to start the family survey.",
+          ? "రాష్ట్రవ్యాప్త కుటుంబ, జీవనోపాధి & వివాహ సర్వే ప్రారంభించడానికి క్రింది బటన్ నొక్కండి."
+          : "Tap below to begin the official Statewide Family, Livelihood & Matrimonial Survey.",
       linkHref: surveyHref,
-      linkLabel: botLang === "te" ? "సర్వే ప్రారంభించండి →" : "Start survey →",
+      linkLabel: botLang === "te" ? "సర్వే ప్రారంభించండి (Start Survey) →" : "Start Survey →",
     });
   }
 
-  function quickChip(kind: "scholarship" | "bajantri" | "officer") {
-    const labels = {
-      scholarship: {
-        te: "🎓 BC-A స్కాలర్‌షిప్ & హాస్టల్",
-        en: "🎓 BC-A Scholarship & Hostel",
-      },
-      bajantri: {
-        te: "🎵 భజంత్రి పెన్షన్ సహాయం",
-        en: "🎵 Bajantri Pension Help",
-      },
-      officer: {
-        te: "👥 మండల ఆఫీసర్ వివరాలు",
-        en: "👥 Mandal Officer Details",
-      },
-    } as const;
-    const replies = {
-      scholarship: {
-        te: "BC-A స్కాలర్‌షిప్ వివరాలు Education వర్టికల్‌లో ఉన్నాయి. అవసరమైన సర్టిఫికేట్ల జాబితా కూడా ఉంది.",
-        en: "BC-A scholarship steps are in the Education vertical, including the certificate checklist.",
-        href: "/verticals/education",
-        linkTe: "Education తెరవండి →",
-        linkEn: "Open Education →",
-      },
-      bajantri: {
-        te: "భజంత్రి పెన్షన్ వెరిఫికేషన్ శిబిరాలు & డాక్యుమెంట్ చెక్‌లిస్ట్ Bajantri వర్టికల్‌లో ఉన్నాయి.",
-        en: "Bajantri pension camps and document checklist are in the Bajantri vertical.",
-        href: "/verticals/bajantri",
-        linkTe: "Bajantri తెరవండి →",
-        linkEn: "Open Bajantri →",
-      },
-      officer: {
-        te: "మీ మండల హబ్ పేజీలో అధికారి ఫోన్ & WhatsApp వివరాలు ఉన్నాయి.",
-        en: "Officer phone & WhatsApp are on each mandal hub page.",
-        href: activeHub,
-        linkTe: "మండల హబ్ తెరవండి →",
-        linkEn: "Open mandal hub →",
-      },
-    } as const;
-
-    const lang = botLang ?? "te";
-    const href = kind === "officer" ? activeHub : replies[kind].href;
+  function startMatrimonyFaq() {
+    const label =
+      botLang === "te"
+        ? "💍 వివాహ వేదిక సహాయం (31+ FAQs)"
+        : "💍 Matrimony Helpdesk (31+ FAQs)";
     setShowActions(false);
-    setFlow("none");
-    push(labels[kind][lang], {
-      text: replies[kind][lang],
-      linkHref: href,
-      linkLabel: lang === "te" ? replies[kind].linkTe : replies[kind].linkEn,
+    setFlow("matrimony-faq");
+    push(label, {
+      text:
+        botLang === "te"
+          ? "నాయీ - భజంత్రి సమాఖ్య వివాహ వేదిక 31+ తరచూ అడిగే ప్రశ్నలు (నమోదు, గోప్యత, ప్రొఫైల్స్, కల్యాణ లక్ష్మి). క్రింది వర్గాల నుండి మీ ప్రశ్నకు సమాధానం ఎంచుకోండి:"
+          : "Nayi-Bajantri Matrimonial Portal 31+ FAQs (Registration, Privacy, Verification, Kalyan Lakshmi). Select a category or ask directly:",
+    });
+  }
+
+  function selectFaqItem(faq: BotFaqItem) {
+    const lang = botLang ?? "te";
+    push(lang === "te" ? faq.questionTe : faq.questionEn, {
+      text: lang === "te" ? faq.answerTe : faq.answerEn,
     });
   }
 
@@ -240,15 +194,16 @@ export function CivicChatbot() {
     if (!text || !botLang) return;
 
     if (flow === "power") {
-      const ok = /^\d{9}$/.test(text.replace(/\s/g, ""));
+      const cleaned = text.replace(/\s/g, "");
+      const ok = /^\d{9}$/.test(cleaned);
       push(text, {
         text: ok
           ? botLang === "te"
-            ? `USC ${text}: డెమో స్థితి — పరిశీలనలో (mock). రిఫరెన్స్ #NS-PWR-${text.slice(-4)}. నిజమైన DISCOM స్థితికి మండల అధికారిని సంప్రదించండి.`
-            : `USC ${text}: Demo status — Under Verification (mock). Reference #NS-PWR-${text.slice(-4)}. Contact your mandal officer for live DISCOM status.`
+            ? `USC ${text}: డెమో స్థితి — పరిశీలనలో (mock). రిఫరెన్స్ #NS-PWR-${text.slice(-4)}. విద్యుత్ శాఖ అధికారిక వెరిఫికేషన్ పూర్తయ్యేవరకు మీ జీవో 23 దరఖాస్తు సురక్షితం.`
+            : `USC ${text}: Demo status — Under Verification (mock). Reference #NS-PWR-${text.slice(-4)}. Your G.O. 23 power benefit status is securely tracked.`
           : botLang === "te"
-            ? "దయచేసి సరిగ్గా 9 అంకెల USC/మీటర్ నంబర్ ఇవ్వండి."
-            : "Please enter a valid 9-digit USC/Meter number.",
+            ? "దయచేసి సరిగ్గా 9 అంకెల USC/మీటర్ నంబర్ ఇవ్వండి (ఉదా: 123456789). నమూనా బటన్ కింద చూడండి."
+            : "Please enter a valid 9-digit USC/Meter number (e.g., 123456789). You can also click the sample button below.",
       });
       if (ok) {
         setFlow("none");
@@ -278,7 +233,7 @@ export function CivicChatbot() {
         text:
           botLang === "te"
             ? "మీ సమస్య / వినతిని సంక్షిప్తంగా వివరించండి."
-            : "Briefly describe your grievance.",
+            : "Briefly describe your grievance or request.",
       });
       setInput("");
       return;
@@ -289,8 +244,8 @@ export function CivicChatbot() {
       push(text, {
         text:
           botLang === "te"
-            ? `ధన్యవాదాలు ${draft.name || ""}. ${draft.mandal || "మీ"} మండలం వినతి డెమోగా నమోదైంది. ట్రాకింగ్ ID: ${ref}. (లైవ్ సర్వర్ లింక్ తర్వాత వస్తుంది — ఈ IDని సేవ్ చేసుకోండి.)`
-            : `Thank you ${draft.name || ""}. Demo grievance logged for ${draft.mandal || "your"} mandal. Tracking ID: ${ref}. (Live server sync coming soon — please save this ID.)`,
+            ? `ధన్యవాదాలు ${draft.name || ""}. ${draft.mandal || "మీ"} మండలం వినతి డెమోగా నమోదైంది. ట్రాకింగ్ ID: ${ref}.`
+            : `Thank you ${draft.name || ""}. Demo grievance logged for ${draft.mandal || "your"} mandal. Tracking ID: ${ref}.`,
       });
       setFlow("none");
       setShowActions(true);
@@ -298,12 +253,27 @@ export function CivicChatbot() {
       return;
     }
 
-    push(text, {
-      text:
-        botLang === "te"
-          ? "మీ సందేశం అందింది. దయచేసి పైనున్న సేవా బటన్లు ఉపయోగించండి లేదా 1800-NAYI-SEVAకి కాల్ చేయండి."
-          : "Message received. Please use the service buttons above or call 1800-NAYI-SEVA.",
-    });
+    // Default matching across BOT_FAQS
+    const matchedFaq = BOT_FAQS.find(
+      (f) =>
+        f.questionTe.toLowerCase().includes(text.toLowerCase()) ||
+        f.questionEn.toLowerCase().includes(text.toLowerCase()) ||
+        f.answerTe.toLowerCase().includes(text.toLowerCase()) ||
+        f.answerEn.toLowerCase().includes(text.toLowerCase()),
+    );
+
+    if (matchedFaq) {
+      push(text, {
+        text: botLang === "te" ? matchedFaq.answerTe : matchedFaq.answerEn,
+      });
+    } else {
+      push(text, {
+        text:
+          botLang === "te"
+            ? "మీ సందేశం అందింది. దయచేసి క్రింది సేవా బటన్లు ఉపయోగించండి లేదా అధికారిక హెల్ప్‌లైన్ +91 9032654111 కు సంప్రదించండి."
+            : "Message received. Please use the menu buttons or call +91 9032654111 for direct assistance.",
+      });
+    }
     setShowActions(true);
     setInput("");
   }
@@ -319,6 +289,17 @@ export function CivicChatbot() {
       setInput(sample);
     }, 900);
   }
+
+  const filteredFaqs = BOT_FAQS.filter((f) => {
+    const matchesCat = faqCategory === "ALL" || f.category === faqCategory;
+    if (!matchesCat) return false;
+    if (!faqSearch) return true;
+    const q = faqSearch.toLowerCase();
+    return (
+      f.questionTe.toLowerCase().includes(q) ||
+      f.questionEn.toLowerCase().includes(q)
+    );
+  });
 
   const panelMotion = reduce
     ? {}
@@ -341,32 +322,46 @@ export function CivicChatbot() {
                 ? "Samakhya Seva Mitra helpdesk"
                 : "సమాఖ్య సేవ మిత్ర"
             }
-            className="flex h-[600px] max-h-[85vh] w-[380px] max-w-[95vw] flex-col overflow-hidden rounded-3xl border border-[#EBE8E0] bg-[#FAF8F2] shadow-2xl"
+            className="flex h-[620px] max-h-[85vh] w-[390px] max-w-[95vw] flex-col overflow-hidden rounded-3xl border border-amber-200/80 bg-[#FAF8F2] shadow-2xl"
             {...panelMotion}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between bg-gradient-to-r from-[#D94F2B] via-[#E8732A] to-[#F5A623] p-4 text-white shadow-md">
-              <div className="flex min-w-0 items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white p-1 shadow-inner">
-                  <Landmark className="h-5 w-5 text-[#D94F2B]" aria-hidden />
-                </span>
+            {/* Header with Back button and controls */}
+            <div className="flex items-center justify-between bg-gradient-to-r from-[#C2410C] via-[#D94F2B] to-amber-700 p-3.5 text-white shadow-md">
+              <div className="flex min-w-0 items-center gap-2.5">
+                {flow !== "none" ? (
+                  <button
+                    type="button"
+                    onClick={() => resetToMainMenu()}
+                    className="tap inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white transition hover:bg-white/30"
+                    aria-label="Back to main menu"
+                    title="ముఖ్య మెనుకు తిరిగి వెళ్ళండి"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/20 p-1 text-amber-200 shadow-inner">
+                    <Landmark className="h-4 w-4" aria-hidden />
+                  </span>
+                )}
                 <span className="min-w-0">
-                  <span className="block font-telugu text-sm font-bold leading-tight">
+                  <span className="block font-telugu text-sm font-bold leading-tight truncate">
                     {botLang === "en"
                       ? "Samakhya Seva Mitra"
                       : "సమాఖ్య సేవ మిత్ర"}
                   </span>
-                  <span className="mt-0.5 block text-[11px] text-white/90">
-                    {botLang === "en"
-                      ? "Nayi–Bajantri civic helpdesk"
-                      : "నాయీ - భజంత్రి సమాఖ్య ప్రజా వేదిక"}
+                  <span className="block text-[10px] text-amber-100 truncate">
+                    {flow === "matrimony-faq"
+                      ? "వివాహ వేదిక సహాయ వేదిక · 31+ FAQs"
+                      : botLang === "en"
+                        ? "Nayi–Bajantri Civic Helpdesk"
+                        : "నాయీ - భజంత్రి సమాఖ్య ప్రజా వేదిక"}
                   </span>
                 </span>
               </div>
               <div className="flex shrink-0 items-center gap-1">
                 <button
                   type="button"
-                  className="tap inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-white/15"
+                  className="tap inline-flex h-8 w-8 items-center justify-center rounded-full text-white/90 hover:bg-white/15"
                   onClick={() => setMinimized(true)}
                   aria-label="Minimize"
                 >
@@ -374,7 +369,7 @@ export function CivicChatbot() {
                 </button>
                 <button
                   type="button"
-                  className="tap inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-white/15"
+                  className="tap inline-flex h-8 w-8 items-center justify-center rounded-full text-white/90 hover:bg-white/15"
                   onClick={() => setOpen(false)}
                   aria-label="Close"
                 >
@@ -393,10 +388,8 @@ export function CivicChatbot() {
                   exit={reduce ? undefined : { opacity: 0, x: 12 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <RangoliBorder position="top" />
-                  <RangoliBorder position="bottom" />
-                  <NamaskaramArt />
-                  <h2 className="mt-2 font-telugu text-3xl font-extrabold tracking-wide text-[#781B0E]">
+                  <CulturalEmblemArt />
+                  <h2 className="mt-3 font-telugu text-2xl font-extrabold tracking-wide text-[#781B0E]">
                     నమస్కారం!
                   </h2>
                   <p className="mt-1 text-center font-telugu text-sm font-bold text-[#8C2A1E]">
@@ -405,22 +398,21 @@ export function CivicChatbot() {
                   <p className="mt-0.5 text-center text-xs font-semibold text-[#8C2A1E]/80">
                     Welcome to Nayi Samakhya Helpdesk
                   </p>
-                  <p className="mt-3 px-6 text-center font-telugu text-xs text-[#71717A]">
-                    ఫిర్యాదు నమోదు చేయడానికి, సమాచారం పొందడానికి భాషను ఎంచుకోండి /
-                    Select language to continue.
+                  <p className="mt-3 px-4 text-center font-telugu text-xs text-[#71717A]">
+                    సేవలు, వివాహ వేదిక, ఉచిత విద్యుత్ & సర్వే కొరకు భాషను ఎంచుకోండి / Select language:
                   </p>
-                  <div className="mt-6 flex w-full flex-col items-center gap-3">
+                  <div className="mt-5 flex w-full flex-col items-center gap-2.5">
                     <button
                       type="button"
                       onClick={() => pickLanguage("te")}
-                      className="w-3/4 rounded-2xl border-2 border-[#E8732A]/50 bg-white py-3 text-center font-telugu text-lg font-bold text-[#781B0E] shadow-sm transition-all hover:bg-[#FFF4E6]"
+                      className="w-3/4 rounded-xl border-2 border-amber-500/50 bg-white py-2.5 text-center font-telugu text-base font-bold text-[#781B0E] shadow-xs transition-all hover:bg-amber-50"
                     >
-                      తెలుగు
+                      తెలుగు (Telugu)
                     </button>
                     <button
                       type="button"
                       onClick={() => pickLanguage("en")}
-                      className="w-3/4 rounded-2xl border-2 border-[#E8732A]/50 bg-white py-3 text-center text-lg font-bold text-[#781B0E] shadow-sm transition-all hover:bg-[#FFF4E6]"
+                      className="w-3/4 rounded-xl border-2 border-amber-500/50 bg-white py-2.5 text-center text-base font-bold text-[#781B0E] shadow-xs transition-all hover:bg-amber-50"
                     >
                       English
                     </button>
@@ -437,27 +429,27 @@ export function CivicChatbot() {
                 >
                   <div
                     ref={scrollerRef}
-                    className="relative flex-1 space-y-4 overflow-y-auto bg-[#FAF8F2] p-4"
+                    className="relative flex-1 space-y-3.5 overflow-y-auto bg-[#FAF8F2] p-4"
                   >
                     <SealWatermark />
                     {messages.map((m) => (
                       <div
                         key={m.id}
                         className={cn(
-                          "relative z-[1] max-w-[92%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm",
+                          "relative z-[1] max-w-[92%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed shadow-xs",
                           m.role === "bot"
                             ? cn(
                                 "border border-[#EBE8E0] bg-white text-[#18181B]",
                                 botLang === "te" && "font-telugu",
                               )
-                            : "ml-auto bg-[#E8732A] text-white",
+                            : "ml-auto bg-gradient-to-r from-[#C2410C] to-amber-700 text-white font-medium",
                         )}
                       >
                         {m.text}
                         {m.linkHref ? (
                           <Link
                             href={m.linkHref}
-                            className="mt-2 block rounded-xl bg-[#FDE8D3] px-3 py-2 text-center text-xs font-bold text-[#781B0E] hover:bg-[#FCD5B5]"
+                            className="mt-2.5 block rounded-xl bg-gradient-to-r from-[#C2410C] to-amber-700 px-3 py-2 text-center text-xs font-bold text-white shadow-xs hover:from-[#9A3412] hover:to-amber-800"
                           >
                             {m.linkLabel}
                           </Link>
@@ -465,99 +457,178 @@ export function CivicChatbot() {
                       </div>
                     ))}
 
-                    {showActions ? (
-                      <div className="relative z-[1] space-y-2.5 pt-1">
+                    {/* Interactive Help for Power Flow */}
+                    {flow === "power" && (
+                      <div className="relative z-[1] rounded-2xl border border-amber-200 bg-amber-50/80 p-3 text-xs">
+                        <p className="font-semibold text-slate-800">
+                          {botLang === "te" ? "💡 నమూనా పరీక్ష (Sample Demo):" : "💡 Sample Demo Assistance:"}
+                        </p>
+                        <p className="mt-1 text-slate-600">
+                          {botLang === "te"
+                            ? "మీ వద్ద మీటర్ నంబర్ లేకుంటే క్రింది బటన్ నొక్కి నమూనా స్టేటస్ చూడవచ్చు:"
+                            : "If you don't have a meter number handy, test with this sample:"}
+                        </p>
                         <button
                           type="button"
-                          onClick={startGrievance}
-                          className="w-full rounded-2xl bg-[#E8732A] py-3.5 text-center text-sm font-bold tracking-wide text-white shadow-md transition-all hover:bg-[#D96318]"
+                          onClick={() => handleSend("123456789")}
+                          className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 font-mono text-xs font-bold text-[#C2410C] border border-amber-200 shadow-2xs hover:bg-amber-100"
                         >
-                          {botLang === "te"
-                            ? "📝 నూతన వినతి / సమస్య నమోదు (Register Grievance)"
-                            : "📝 Register Grievance / New Complaint"}
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                          నమూనా USC: 123456789 ఎంటర్ చేయండి
                         </button>
+                      </div>
+                    )}
+
+                    {/* Matrimony 31+ FAQ Explorer Section */}
+                    {flow === "matrimony-faq" && (
+                      <div className="relative z-[1] space-y-2 rounded-2xl border border-amber-200 bg-white p-3 shadow-xs">
+                        <div className="flex items-center justify-between border-b border-amber-100 pb-2">
+                          <span className="flex items-center gap-1 font-bold text-xs text-[#C2410C]">
+                            <Sparkles className="h-3.5 w-3.5" />
+                            31+ తరచూ అడిగే ప్రశ్నలు
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-medium">
+                            {filteredFaqs.length} ప్రశ్నలు
+                          </span>
+                        </div>
+
+                        {/* Search input for FAQs */}
+                        <div className="relative">
+                          <Search className="absolute left-2.5 top-2 h-3.5 w-3.5 text-slate-400" />
+                          <input
+                            type="text"
+                            placeholder="శోధించండి / Search FAQs..."
+                            value={faqSearch}
+                            onChange={(e) => setFaqSearch(e.target.value)}
+                            className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 text-xs focus:border-[#C2410C] focus:outline-none"
+                          />
+                        </div>
+
+                        {/* Category filter pills */}
+                        <div className="flex flex-wrap gap-1 pt-1">
+                          {[
+                            { key: "ALL", te: "అన్నీ", en: "All" },
+                            { key: "REGISTRATION", te: "నమోదు", en: "Registration" },
+                            { key: "PRIVACY", te: "గోప్యత", en: "Privacy" },
+                            { key: "HOROSCOPE", te: "జాతకం", en: "Horoscope" },
+                            { key: "SECURITY", te: "సహాయం", en: "Security" },
+                          ].map((cat) => (
+                            <button
+                              key={cat.key}
+                              type="button"
+                              onClick={() => setFaqCategory(cat.key)}
+                              className={cn(
+                                "rounded-full px-2 py-0.5 text-[10px] font-bold transition",
+                                faqCategory === cat.key
+                                  ? "bg-[#C2410C] text-white"
+                                  : "bg-slate-100 text-slate-700 hover:bg-slate-200",
+                              )}
+                            >
+                              {botLang === "te" ? cat.te : cat.en}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* FAQ Question list */}
+                        <div className="max-h-56 overflow-y-auto space-y-1.5 pr-1 pt-1">
+                          {filteredFaqs.map((faq) => (
+                            <button
+                              key={faq.id}
+                              type="button"
+                              onClick={() => selectFaqItem(faq)}
+                              className="w-full text-left rounded-xl border border-amber-100/80 bg-amber-50/40 p-2 text-xs font-semibold text-slate-800 transition hover:border-[#C2410C] hover:bg-amber-100/60"
+                            >
+                              <span className="block text-[10px] text-[#C2410C] font-bold">
+                                #{faq.id} · {faq.categoryTe}
+                              </span>
+                              <span className="mt-0.5 block leading-snug">
+                                {botLang === "te" ? faq.questionTe : faq.questionEn}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {showActions && flow === "none" ? (
+                      <div className="relative z-[1] space-y-2 pt-1">
+                        {/* Primary Action 1: Matrimonial 31+ FAQ Desk */}
+                        <button
+                          type="button"
+                          onClick={startMatrimonyFaq}
+                          className="w-full rounded-xl bg-gradient-to-r from-amber-600 to-[#C2410C] py-2.5 px-3 text-center text-xs font-bold text-white shadow-xs transition hover:opacity-95"
+                        >
+                          <span className="flex items-center justify-center gap-1.5">
+                            <Heart className="h-4 w-4" />
+                            {botLang === "te"
+                              ? "💍 వివాహ వేదిక సమగ్ర సమాచారం (31+ FAQs)"
+                              : "💍 Matrimonial 31+ FAQs & Guide"}
+                          </span>
+                        </button>
+
+                        {/* Primary Action 2: Survey with direct routing */}
+                        <button
+                          type="button"
+                          onClick={startSurvey}
+                          className="w-full rounded-xl bg-white border-2 border-[#C2410C]/40 py-2.5 px-3 text-center text-xs font-bold text-[#C2410C] shadow-2xs transition hover:bg-orange-50"
+                        >
+                          <span className="flex items-center justify-center gap-1.5">
+                            <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                            {botLang === "te"
+                              ? "📋 రాష్ట్రవ్యాప్త కుటుంబ సర్వే నమోదు (Survey)"
+                              : "📋 Statewide Family Survey Entry"}
+                          </span>
+                        </button>
+
                         <div className="grid grid-cols-2 gap-2">
                           <button
                             type="button"
                             onClick={startPower}
-                            className={cn(
-                              "rounded-2xl bg-[#EE8939] px-2 py-3 text-center text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#DE7725]",
-                              botLang === "te" && "font-telugu",
-                            )}
+                            className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-2 text-center text-[11px] font-bold text-amber-900 transition hover:bg-amber-100"
                           >
                             {botLang === "te"
-                              ? "🔍 250 యూనిట్ల ఉచిత విద్యుత్ స్టేటస్"
-                              : "🔍 250-Unit Free Power Status"}
+                              ? "⚡ 250 యూనిట్ల స్టేటస్"
+                              : "⚡ 250U Free Power"}
                           </button>
                           <button
                             type="button"
-                            onClick={startSurvey}
-                            className={cn(
-                              "rounded-2xl bg-[#EE8939] px-2 py-3 text-center text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#DE7725]",
-                              botLang === "te" && "font-telugu",
-                            )}
+                            onClick={startGrievance}
+                            className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-2 text-center text-[11px] font-bold text-amber-900 transition hover:bg-amber-100"
                           >
                             {botLang === "te"
-                              ? "📋 కుటుంబ సర్వే నమోదు"
-                              : "📋 Family Survey Entry"}
+                              ? "📝 జీవో 23 వినతి నమోదు"
+                              : "📝 Log Grievance"}
                           </button>
                         </div>
-                        <div className="flex flex-wrap gap-2 pt-1">
+
+                        <div className="flex items-center justify-between pt-1 border-t border-slate-200">
                           <button
                             type="button"
-                            onClick={() => quickChip("scholarship")}
-                            className={cn(
-                              "rounded-full border border-[#E8732A]/35 bg-white px-3 py-1.5 text-[11px] font-semibold text-[#781B0E] hover:bg-[#FFF4E6]",
-                              botLang === "te" && "font-telugu",
-                            )}
+                            onClick={() => {
+                              setBotLang(null);
+                              setMessages([]);
+                              setFlow("none");
+                            }}
+                            className="text-[10px] font-semibold text-slate-500 hover:text-[#C2410C] underline"
                           >
-                            {botLang === "te"
-                              ? "🎓 BC-A స్కాలర్‌షిప్ & హాస్టల్"
-                              : "🎓 BC-A Scholarship & Hostel"}
+                            {botLang === "te" ? "భాష మార్చండి (Change Language)" : "Change Language"}
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => quickChip("bajantri")}
-                            className={cn(
-                              "rounded-full border border-[#E8732A]/35 bg-white px-3 py-1.5 text-[11px] font-semibold text-[#781B0E] hover:bg-[#FFF4E6]",
-                              botLang === "te" && "font-telugu",
-                            )}
+                          <a
+                            href="https://wa.me/919032654111"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-[10px] font-bold text-[#C2410C] hover:underline"
                           >
-                            {botLang === "te"
-                              ? "🎵 భజంత్రి పెన్షన్ సహాయం"
-                              : "🎵 Bajantri Pension Help"}
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => quickChip("officer")}
-                            className={cn(
-                              "rounded-full border border-[#E8732A]/35 bg-white px-3 py-1.5 text-[11px] font-semibold text-[#781B0E] hover:bg-[#FFF4E6]",
-                              botLang === "te" && "font-telugu",
-                            )}
-                          >
-                            {botLang === "te"
-                              ? "👥 మండల ఆఫీసర్ వివరాలు"
-                              : "👥 Mandal Officer Details"}
-                          </button>
+                            హెల్ప్‌లైన్: 9032654111
+                          </a>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setBotLang(null);
-                            setMessages([]);
-                            setFlow("none");
-                          }}
-                          className="text-[10px] font-medium text-[#A1A1AA] underline-offset-2 hover:underline"
-                        >
-                          Change language / భాష మార్చండి
-                        </button>
                       </div>
                     ) : null}
                   </div>
 
-                  <div className="border-t border-[#EBE8E0] bg-white p-3">
+                  <div className="border-t border-[#EBE8E0] bg-white p-2.5">
                     <form
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-1.5"
                       onSubmit={(e) => {
                         e.preventDefault();
                         handleSend();
@@ -567,8 +638,8 @@ export function CivicChatbot() {
                         type="button"
                         onClick={onMic}
                         className={cn(
-                          "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FDE8D3] text-[#D94F2B] transition-colors hover:bg-[#FCD5B5]",
-                          listening && "ring-2 ring-[#E8732A]/40",
+                          "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-[#C2410C] transition hover:bg-amber-200",
+                          listening && "ring-2 ring-[#C2410C]/40",
                         )}
                         aria-label="Voice input"
                       >
@@ -579,27 +650,22 @@ export function CivicChatbot() {
                         onChange={(e) => setInput(e.target.value)}
                         placeholder={
                           botLang === "en"
-                            ? "Use the buttons above, or type here…"
-                            : "పైనున్న బటన్లను ఉపయోగించండి…"
+                            ? "Type question, USC, or use buttons above…"
+                            : "ప్రశ్న లేదా 9 అంకెల USC ఇక్కడ రాయండి…"
                         }
                         className={cn(
-                          "flex-1 rounded-full border border-[#EBE8E0] bg-[#F4F2EB]/60 px-4 py-2 text-xs text-[#18181B] focus:border-[#E8732A] focus:outline-none",
+                          "flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-[#18181B] focus:border-[#C2410C] focus:bg-white focus:outline-none",
                           botLang === "te" && "font-telugu",
                         )}
                       />
                       <button
                         type="submit"
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E8732A] text-white transition-colors hover:bg-[#D96318]"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#C2410C] text-white transition hover:bg-[#9A3412]"
                         aria-label="Send"
                       >
                         <Send className="h-4 w-4" />
                       </button>
                     </form>
-                    <span className="mt-1 block text-center text-[10px] text-[#A1A1AA]">
-                      {botLang === "en"
-                        ? "Demo helpdesk • Call 1800-NAYI-SEVA for live seva"
-                        : "డెమో హెల్ప్‌డెస్క్ • లైవ్ సేవకు 1800-NAYI-SEVA"}
-                    </span>
                   </div>
                 </motion.div>
               )}
@@ -618,14 +684,15 @@ export function CivicChatbot() {
           }
           setOpen((v) => !v);
         }}
-        className="chat-pulse tap inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#D94F2B] via-[#E8732A] to-[#F5A623] px-4 py-3 text-sm font-semibold text-white shadow-lg"
+        className="tap inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C2410C] via-[#D94F2B] to-amber-700 px-4 py-2.5 text-xs font-bold text-white shadow-lg hover:shadow-xl transition-all"
         aria-expanded={open && !minimized}
       >
-        <MessageCircle className="h-5 w-5" aria-hidden />
+        <MessageCircle className="h-4 w-4" aria-hidden />
         <span className={siteLang === "te" ? "font-telugu" : ""}>
-          {siteLang === "en" ? "Seva Mitra" : "సమాఖ్య సేవ మిత్ర"}
+          {siteLang === "en" ? "Seva Mitra · FAQ & Help" : "సేవ మిత్ర · సహాయం"}
         </span>
       </button>
     </div>
   );
 }
+
