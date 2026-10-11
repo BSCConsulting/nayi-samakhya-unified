@@ -6,6 +6,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   output: process.env.DOCKER_BUILD ? 'standalone' : undefined,
+  images: {
+    unoptimized: true,
+  },
   async headers() {
     return [
       {
