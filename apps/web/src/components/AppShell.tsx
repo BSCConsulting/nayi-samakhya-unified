@@ -47,6 +47,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         className={`flex-1 overflow-x-hidden ${shellBg} ${showBottomNav ? "pb-nav-clear" : ""}`}
       >
         {children}
+        {!pathname.startsWith("/admin") && (
+          <div className="no-print">
+            <CivicChatbot />
+          </div>
+        )}
         {showBottomNav ? <MobileBottomNav /> : null}
       </div>
     );

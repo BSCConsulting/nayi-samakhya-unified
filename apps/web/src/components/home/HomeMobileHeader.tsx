@@ -6,6 +6,7 @@ import {
   ChevronDown,
   Contrast,
   FileText,
+  Globe,
   MapPin,
   Menu,
   MessageCircle,
@@ -291,7 +292,7 @@ export function HomeMobileHeader() {
             </Link>
             <Link
               href="/welfare/salon-schemes"
-              className="civic-focus-ring hidden shrink-0 items-center gap-1.5 rounded-lg border border-amber-300/70 bg-amber-50/80 px-2.5 py-1.5 font-telugu text-xs font-semibold text-amber-900 transition hover:bg-amber-100/90 lg:inline-flex"
+              className="civic-focus-ring hidden shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 font-telugu text-xs font-semibold text-amber-800 transition hover:bg-amber-50 lg:inline-flex"
             >
               <span className="text-amber-600">⚡</span>
               {isTe ? "సంక్షేమ పథకాలు" : "Welfare Hub"}
@@ -302,15 +303,16 @@ export function HomeMobileHeader() {
             <button
               type="button"
               onClick={() => setLanguage(language === "te" ? "en" : "te")}
-              className="tap hidden h-8 items-center rounded-lg border border-slate-200 bg-white px-2.5 font-sans text-xs font-bold text-slate-700 transition hover:bg-slate-50 md:inline-flex"
+              className="tap hidden h-8 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 font-sans text-xs font-semibold text-slate-700 transition hover:bg-slate-50 md:inline-flex"
               aria-label="Language switch"
             >
-              {language === "te" ? "English" : "తెలుగు"}
+              <Globe className="h-3.5 w-3.5 text-slate-400" aria-hidden />
+              <span>{language === "te" ? "English" : "తెలుగు"}</span>
             </button>
 
             <Link
               href="/survey"
-              className={`tap hidden items-center gap-1.5 rounded-lg bg-[#C2410C] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs transition hover:bg-[#9A3412] lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
+              className={`tap hidden items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#B45309] to-[#C2410C] px-3.5 py-2 text-xs font-bold text-white shadow-xs transition hover:brightness-105 active:scale-95 lg:inline-flex ${isTe ? "font-telugu" : "font-sans"}`}
             >
               <span>{t("navCtaSurvey")}</span>
               <span aria-hidden>&rarr;</span>

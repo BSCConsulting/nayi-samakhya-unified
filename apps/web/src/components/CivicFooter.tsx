@@ -158,7 +158,7 @@ export function CivicFooter() {
             </div>
           </div>
 
-          {/* Col 2 — Public services */}
+          {/* Col 2 — Citizen & Public Services */}
           <div>
             <FooterColHeading
               icon={FileText}
@@ -168,12 +168,12 @@ export function CivicFooter() {
             <ul className={`space-y-2.5 ${isTe ? "font-telugu" : "font-sans"}`}>
               <li>
                 <FooterNavLink href="/" icon={Home}>
-                  Home
+                  {isTe ? "హోమ్‌పేజీ (Home)" : "Home"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/representation" icon={ScrollText}>
-                  Petition
+                  {isTe ? "చట్టబద్ధ వినతిపత్రం (Petition)" : "Petition Generator"}
                 </FooterNavLink>
               </li>
               <li>
@@ -182,25 +182,36 @@ export function CivicFooter() {
                 </FooterNavLink>
               </li>
               <li>
+                <FooterNavLink href="/survey" icon={ClipboardList}>
+                  {isTe ? "కులగణన సర్వే (Survey Live)" : "Statewide Survey (Live)"}
+                </FooterNavLink>
+              </li>
+              <li>
+                <FooterNavLink href="/districts" icon={Landmark}>
+                  {isTe ? "33 జిల్లాల సమాఖ్య (Districts)" : "Districts Directory"}
+                </FooterNavLink>
+              </li>
+              <li>
                 <FooterNavLink href="/feed" icon={Newspaper}>
                   {t("navGazette")}
                 </FooterNavLink>
               </li>
               <li>
-                <FooterNavLink href="/survey" icon={ClipboardList}>
-                  Survey
-                </FooterNavLink>
-              </li>
-              <li>
-                <FooterNavLink href="/districts" icon={Landmark}>
-                  Districts
-                </FooterNavLink>
-              </li>
-              <li>
                 <FooterNavLink href="/history" icon={BookOpen}>
-                  History
+                  {isTe ? "చారిత్రక ప్రస్థానం (History)" : "Heritage & History"}
                 </FooterNavLink>
               </li>
+            </ul>
+          </div>
+
+          {/* Col 3 — Welfare Schemes & Enterprise */}
+          <div>
+            <FooterColHeading
+              icon={Zap}
+              label={isTe ? "సంక్షేమ పథకాలు & వృత్తి" : "Welfare & Enterprise"}
+              isTe={isTe}
+            />
+            <ul className={`space-y-2.5 ${isTe ? "font-telugu" : "font-sans"}`}>
               <li>
                 <FooterNavLink href="/salon-hub" icon={Scissors}>
                   {t("navSalonHub")}
@@ -208,24 +219,33 @@ export function CivicFooter() {
               </li>
               <li>
                 <FooterNavLink href="/welfare/salon-schemes" icon={Zap}>
-                  {isTe ? "సెలూన్ సంక్షేమ పథకాలు (250 యూనిట్లు & PM విశ్వకర్మ)" : "Salon Welfare Schemes (Free Power & Vishwakarma)"}
+                  {isTe ? "250 యూనిట్ల ఉచిత విద్యుత్ (G.O. 23)" : "250 Units Free Power (G.O. 23)"}
+                </FooterNavLink>
+              </li>
+              <li>
+                <FooterNavLink href="/welfare/salon-schemes#vishwakarma" icon={Landmark}>
+                  {isTe ? "పీఎం విశ్వకర్మ యోజన (PM Vishwakarma)" : "PM Vishwakarma Scheme"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/matrimony" icon={Users}>
-                  {isTe ? "వివాహ వేదిక (Matrimony Hub)" : "Matrimonial Portal (Samakhya Matrimony)"}
+                  {isTe ? "సమాఖ్య వివాహ వేదిక (Matrimony Hub)" : "Matrimonial Portal (Samakhya)"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/welfare/salon-schemes#kalyana-lakshmi" icon={ScrollText}>
-                  {isTe ? "కళ్యాణ లక్ష్మి సహాయ డెస్క్ (₹1,00,116)" : "Kalyana Lakshmi Guide Desk (₹1,00,116)"}
+                  {isTe ? "కళ్యాణ లక్ష్మి సహాయ డెస్క్ (₹1,00,116)" : "Kalyana Lakshmi Guide (₹1,00,116)"}
+                </FooterNavLink>
+              </li>
+              <li>
+                <FooterNavLink href="/welfare/salon-schemes" icon={BookOpen}>
+                  {isTe ? "సంక్షేమ హక్కుల మార్గదర్శి" : "Welfare Rights Guide"}
                 </FooterNavLink>
               </li>
             </ul>
           </div>
 
-
-          {/* Col 3 — Coordinators */}
+          {/* Col 4 — Field Coordinators & Desks */}
           <div>
             <FooterColHeading
               icon={Users}
@@ -234,59 +254,43 @@ export function CivicFooter() {
             />
             <ul className={`space-y-2.5 ${isTe ? "font-telugu" : "font-sans"}`}>
               <li>
+                <FooterNavLink href="/coordinator-card" icon={IdCard}>
+                  {isTe ? "సమన్వయకర్త ఐడీ కార్డు" : "Coordinator ID Card"}
+                </FooterNavLink>
+              </li>
+              <li>
                 <FooterNavLink href="/poster" icon={ImageIcon}>
-                  Wall Poster
+                  {isTe ? "వాల్ పోస్టర్ & జీవో పత్రం" : "Printable Shop Poster"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/announce" icon={MessageCircle}>
-                  WhatsApp Mobilization
+                  {isTe ? "వాట్సాప్ మొబిలైజేషన్" : "WhatsApp Mobilization"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/sprint" icon={Trophy}>
-                  సేవా సారథి ఛాలెంజ్
+                  {isTe ? "సేవా సారథి ఛాలెంజ్" : "Seva Sarathi Sprint"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/quiz" icon={Scale}>
-                  లీగల్ క్విజ్
+                  {isTe ? "లీగల్ అవేర్‌నెస్ క్విజ్" : "Legal Rights Quiz"}
                 </FooterNavLink>
               </li>
               <li>
                 <FooterNavLink href="/reels" icon={Clapperboard}>
-                  మన కళ రీల్స్
+                  {isTe ? "మన కళ రీల్స్" : "Cultural Reels"}
                 </FooterNavLink>
               </li>
-              <li>
-                <FooterNavLink href="/coordinator-card" icon={IdCard}>
-                  Coordinator Card
-                </FooterNavLink>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4 — Desk & admin */}
-          <div>
-            <FooterColHeading
-              icon={Send}
-              label={t("footerColDesk")}
-              isTe={isTe}
-            />
-            <ul className={`space-y-2.5 ${isTe ? "font-telugu" : "font-sans"}`}>
               <li>
                 <FooterNavLink href={TELEGRAM_BOT_URL} icon={Bot} external>
-                  Telegram Bot
+                  {isTe ? "టెలిగ్రామ్ డెస్క్ బాట్" : "Telegram Desk Bot"}
                 </FooterNavLink>
               </li>
               <li>
-                <FooterNavLink href="/twa" icon={LayoutGrid}>
-                  Mini App Hub
-                </FooterNavLink>
-              </li>
-              <li>
-                <FooterNavLink href="/admin/moderation" icon={Lock}>
-                  Moderation Desk
+                <FooterNavLink href="/admin/desk" icon={Lock}>
+                  {isTe ? "అడ్మిన్ డెస్క్ లాగిన్" : "Admin Moderation Desk"}
                 </FooterNavLink>
               </li>
             </ul>

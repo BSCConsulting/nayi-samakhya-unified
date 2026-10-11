@@ -17,6 +17,7 @@ import {
   Search,
   Sparkles,
   CheckCircle2,
+  Volume2,
 } from "lucide-react";
 import { useLanguageStore } from "@/lib/store/preferences";
 import type { Lang } from "@/lib/types";
@@ -30,6 +31,7 @@ type Msg = {
   linkHref?: string;
   linkLabel?: string;
   isFaqList?: boolean;
+  audioUrl?: string;
 };
 
 type Flow = "none" | "power" | "grievance-mandal" | "grievance-name" | "grievance-text" | "matrimony-faq";
@@ -186,6 +188,7 @@ export function CivicChatbot() {
     const lang = botLang ?? "te";
     push(lang === "te" ? faq.questionTe : faq.questionEn, {
       text: lang === "te" ? faq.answerTe : faq.answerEn,
+      audioUrl: `/matrimony/audio/bot/faq-${faq.id}.mp3`,
     });
   }
 
@@ -446,6 +449,21 @@ export function CivicChatbot() {
                         )}
                       >
                         {m.text}
+                        {m.audioUrl ? (
+                          <div className="mt-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const audio = new Audio(m.audioUrl);
+                                audio.play().catch(() => {});
+                              }}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-900 transition hover:bg-amber-100 active:scale-95"
+                            >
+                              <Volume2 className="h-3.5 w-3.5 text-[#C2410C]" />
+                              <span>{botLang === "te" ? "🔊 సమాధానం వినండి (Audio)" : "🔊 Listen (Audio)"}</span>
+                            </button>
+                          </div>
+                        ) : null}
                         {m.linkHref ? (
                           <Link
                             href={m.linkHref}
