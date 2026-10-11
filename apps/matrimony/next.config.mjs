@@ -4,8 +4,7 @@ const nextConfig = {
   basePath: '/matrimony',
   reactStrictMode: true,
   poweredByHeader: false,
-  trailingSlash: false,
-  output: 'standalone',
+  output: process.env.DOCKER_BUILD ? 'standalone' : undefined,
   async redirects() {
     return [
       {

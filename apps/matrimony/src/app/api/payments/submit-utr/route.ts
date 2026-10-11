@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { UtrSubmissionRequest } from "../../../../lib/payments.ts";
 
-// In-memory or append store for UTR submissions (synced with admin approval queue)
-export const UTR_REGISTRY: (UtrSubmissionRequest & { id: string; status: "PENDING" | "APPROVED" | "REJECTED" })[] = [];
+const UTR_REGISTRY: (UtrSubmissionRequest & { id: string; status: "PENDING" | "APPROVED" | "REJECTED" })[] = [];
 
 export async function POST(req: Request) {
   try {
