@@ -120,6 +120,22 @@ export function GlobalCommunityHelpBar() {
           >
             <span>📍</span> సహాయ కేంద్రాలు (Centers)
           </Link>
+
+          <Link
+            href="/kalyana-lakshmi"
+            style={{
+              color: '#FDE68A',
+              fontWeight: 800,
+              textDecoration: 'none',
+              borderBottom: '1px dotted #FDE68A',
+              fontSize: '0.8rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            <span>🏛️</span> కళ్యాణ లక్ష్మి (₹1,00,116)
+          </Link>
         </div>
       </div>
     </aside>

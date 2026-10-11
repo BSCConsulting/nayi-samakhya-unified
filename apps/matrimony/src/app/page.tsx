@@ -980,12 +980,23 @@ export default function Home() {
         <p style={{ margin: '0 0 0.5rem', color: '#801426', fontWeight: 800, fontSize: '1.05rem' }}>
           <Bi en="Nayi Samakhya Telangana · Sovereign Matrimonial Alliance" te="నాయీ సమాఖ్య తెలంగాణ · అధికారిక కల్యాణ వేదిక" />
         </p>
-        <p className="hint" style={{ fontSize: '0.88rem', color: '#64748B' }}>
+        <p className="hint" style={{ fontSize: '0.88rem', color: '#64748B', marginBottom: '0.75rem' }}>
           <Bi 
             en="Headquarters: Hyderabad, Telangana · For assistance, contact your Mandal Lineage Coordinator" 
             te="ప్రధాన కార్యాలయం: హైదరాబాద్, తెలంగాణ · సహాయం కోసం మీ మండల సమన్వయకర్తను సంప్రదించండి" 
           />
         </p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', flexWrap: 'wrap', fontSize: '0.86rem', marginTop: '0.75rem' }}>
+          <Link href="/help-centers" style={{ color: '#801426', fontWeight: 700, textDecoration: 'none' }}>
+            📍 సహాయ కేంద్రాలు (Help Centers)
+          </Link>
+          <Link href="/kalyana-lakshmi" style={{ color: '#801426', fontWeight: 700, textDecoration: 'none' }}>
+            🏛️ కళ్యాణ లక్ష్మి పథకం సహాయ వేదిక (₹1,00,116)
+          </Link>
+          <Link href="/offline-meets" style={{ color: '#801426', fontWeight: 700, textDecoration: 'none' }}>
+            🤝 వివాహ పరిచయ వేదికలు
+          </Link>
+        </div>
       </footer>
     </main>
   );

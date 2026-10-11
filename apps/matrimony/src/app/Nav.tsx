@@ -41,6 +41,9 @@ export function Nav({ claims }: { claims?: SsoClaims | null }) {
         <Link href="/discover" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Discover" te="అన్వేషణ" /></Link>
         <Link href="/offline-meets" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Meets" te="సమ్మేళనాలు" /></Link>
         <Link href="/help-centers" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Help Centers" te="సహాయ కేంద్రాలు" /></Link>
+        <Link href="/kalyana-lakshmi" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#801426', background: 'rgba(212, 175, 55, 0.15)', padding: '2px 8px', borderRadius: '6px', border: '1px solid rgba(212, 175, 55, 0.4)' }}>
+          <Bi en="🏛️ Kalyana Lakshmi" te="🏛️ కళ్యాణ లక్ష్మి" />
+        </Link>
         {claims && <Link href="/interests" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Interests" te="ఆసక్తులు" /></Link>}
         {claims && <Link href="/settings/privacy" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Privacy" te="గోప్యత" /></Link>}
         {admin && <Link href="/nsm-admin" style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155' }}><Bi en="Admin" te="నిర్వహణ" /></Link>}
