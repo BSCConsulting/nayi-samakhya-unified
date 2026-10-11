@@ -5,6 +5,9 @@ import {
   ArrowRight,
   FileText,
   MessageCircle,
+  ShieldCheck,
+  Users,
+  Zap,
 } from "lucide-react";
 import { CivicEngineMap } from "@/components/CivicEngineMap";
 import { CivicStalwarts } from "@/components/CivicStalwarts";
@@ -44,70 +47,98 @@ export default function HomePage() {
           aria-hidden
         />
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-12">
-          <div className="space-y-5 text-center lg:text-left">
-            <span
-              className={cn(
-                "civic-eyebrow-pill mb-1 shadow-sm",
-                isTe ? "font-telugu" : "font-sans",
-              )}
-            >
-              {t("heroEyebrow")}
-            </span>
+          <div className="space-y-6 text-center lg:text-left">
+            {/* Live sovereign badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/80 bg-amber-50/90 px-3.5 py-1.5 shadow-2xs backdrop-blur-xs">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden />
+              <span className={`text-[11px] font-bold tracking-wide text-amber-900 ${isTe ? "font-telugu" : "font-sans"}`}>
+                {t("heroEyebrow")}
+              </span>
+            </div>
 
+            {/* Inspiring, bullet-free headline */}
             <div>
               <h1 className="tracking-tight text-center lg:text-left">
                 <span
                   className={cn(
-                    "block text-[1.75rem] font-normal leading-[1.75] text-slate-900 sm:text-4xl lg:text-5xl",
-                    isTe ? "font-display-te" : "font-sans font-semibold tracking-tight",
+                    "block text-2xl font-bold leading-tight text-slate-900 sm:text-4xl lg:text-5xl",
+                    isTe ? "font-display-te" : "font-sans font-extrabold tracking-tight",
                   )}
                 >
                   {t("heroH1Primary")}
                 </span>
-                {isTe ? (
-                  <span className="mt-2.5 block font-display-te text-[1.45rem] font-normal italic leading-[1.75] text-amber-600 sm:text-3xl lg:text-4xl">
-                    {t("heroH1Secondary")}
-                  </span>
-                ) : (
-                  <span className="mt-2.5 block font-sans text-lg font-medium tracking-wide text-amber-700 sm:text-xl lg:text-2xl">
-                    {t("heroH1Secondary")}
-                  </span>
-                )}
+                <span
+                  className={cn(
+                    "mt-2 block bg-gradient-to-r from-[#B45309] via-[#C2410C] to-[#D97706] bg-clip-text text-transparent text-xl font-bold sm:text-3xl lg:text-4xl",
+                    isTe ? "font-display-te" : "font-sans font-extrabold",
+                  )}
+                >
+                  {t("heroH1Secondary")}
+                </span>
               </h1>
             </div>
 
-            <div className="mx-auto mt-3 max-w-2xl space-y-3 text-center lg:mx-0 lg:text-left">
-              <p
-                className={cn(
-                  "text-base font-normal text-slate-600 sm:text-lg",
-                  isTe ? "font-telugu leading-telugu" : "font-sans leading-relaxed",
-                )}
-              >
-                {t("heroMissionLead")}
-              </p>
-              <p
-                className={cn(
-                  "text-base font-normal text-slate-600 sm:text-lg",
-                  isTe ? "font-telugu leading-telugu" : "font-sans leading-relaxed",
-                )}
-              >
-                {t("heroMissionPillars")}
-              </p>
-              <p
-                className={cn(
-                  "text-sm font-normal text-slate-500",
-                  isTe ? "font-telugu leading-telugu" : "font-sans leading-relaxed",
-                )}
-              >
-                {t("heroMissionSecondary")}
-              </p>
+            {/* Clear, readable mission statement */}
+            <p
+              className={cn(
+                "mx-auto max-w-xl text-sm leading-relaxed text-slate-600 sm:text-base lg:mx-0 lg:text-lg",
+                isTe ? "font-telugu leading-telugu" : "font-sans",
+              )}
+            >
+              {t("heroMissionLead")}
+            </p>
+
+            {/* 3 High-Impact Civic Pillar Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-left">
+              <div className="group rounded-xl border border-amber-200/80 bg-white/95 p-3 shadow-2xs transition-all hover:border-amber-400 hover:shadow-xs">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-800 transition group-hover:bg-amber-600 group-hover:text-white">
+                    <Zap className="h-4 w-4" />
+                  </span>
+                  <span className={`font-bold text-xs text-slate-900 ${isTe ? "font-telugu" : "font-sans"}`}>
+                    {isTe ? "250U ఉచిత విద్యుత్" : "250U Free Power"}
+                  </span>
+                </div>
+                <p className={`mt-1.5 text-[11px] text-slate-500 leading-snug ${isTe ? "font-telugu" : "font-sans"}`}>
+                  {isTe ? "జీవో 23 కేటగిరి మార్పు & సబ్సిడీ హక్కు" : "G.O. 23 power benefit & meter status"}
+                </p>
+              </div>
+
+              <div className="group rounded-xl border border-amber-200/80 bg-white/95 p-3 shadow-2xs transition-all hover:border-amber-400 hover:shadow-xs">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-800 transition group-hover:bg-amber-600 group-hover:text-white">
+                    <ShieldCheck className="h-4 w-4" />
+                  </span>
+                  <span className={`font-bold text-xs text-slate-900 ${isTe ? "font-telugu" : "font-sans"}`}>
+                    {isTe ? "చట్టబద్ధ వినతి డాకెట్" : "Civic Petition Docket"}
+                  </span>
+                </div>
+                <p className={`mt-1.5 text-[11px] text-slate-500 leading-snug ${isTe ? "font-telugu" : "font-sans"}`}>
+                  {isTe ? "MRO, కలెక్టరేట్ అధికారిక అర్జీలు" : "Print-ready A4 dockets for MRO"}
+                </p>
+              </div>
+
+              <div className="group rounded-xl border border-amber-200/80 bg-white/95 p-3 shadow-2xs transition-all hover:border-amber-400 hover:shadow-xs">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-800 transition group-hover:bg-amber-600 group-hover:text-white">
+                    <Users className="h-4 w-4" />
+                  </span>
+                  <span className={`font-bold text-xs text-slate-900 ${isTe ? "font-telugu" : "font-sans"}`}>
+                    {isTe ? "సమగ్ర సంక్షేమ వేదిక" : "Welfare & Matrimony"}
+                  </span>
+                </div>
+                <p className={`mt-1.5 text-[11px] text-slate-500 leading-snug ${isTe ? "font-telugu" : "font-sans"}`}>
+                  {isTe ? "వివాహ సంబంధాలు & కల్యాణ లక్ష్మి గైడ్" : "Community alliances & welfare schemes"}
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col items-stretch justify-center gap-2.5 pt-1 sm:flex-row sm:items-center lg:justify-start">
+            {/* CTAs */}
+            <div className="flex flex-col items-stretch justify-center gap-3 pt-2 sm:flex-row sm:items-center lg:justify-start">
               <Link
                 href="/representation"
                 className={cn(
-                  "civic-focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#B45309] via-[#C2410C] to-[#D97706] px-5 py-3 text-sm font-bold text-white shadow-[0_8px_24px_rgb(180_83_9_/0.3)] transition-all duration-300 hover:brightness-110",
+                  "civic-focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#B45309] via-[#C2410C] to-[#D97706] px-6 py-3.5 text-sm font-bold text-white shadow-[0_8px_20px_rgb(180_83_9_/0.25)] transition-all duration-300 hover:brightness-110 active:scale-95",
                   isTe ? "font-telugu" : "font-sans",
                 )}
               >
@@ -120,14 +151,19 @@ export default function HomePage() {
                 target="_blank"
                 rel="noreferrer"
                 className={cn(
-                  "civic-focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#128C7E]/40 bg-white px-5 py-3 text-sm font-bold text-[#0E7A6E] shadow-xs transition hover:bg-emerald-50",
+                  "civic-focus-ring inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-emerald-600/30 bg-emerald-50/50 px-5 py-3.5 text-sm font-bold text-emerald-800 shadow-2xs transition hover:bg-emerald-100/70 active:scale-95",
                   isTe ? "font-telugu" : "font-sans",
                 )}
               >
-                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden />
+                <MessageCircle className="h-4 w-4 shrink-0 text-emerald-600" aria-hidden />
                 {t("navCtaWhatsapp")}
-                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
               </a>
+            </div>
+
+            {/* Live coverage trust badge */}
+            <div className="flex items-center justify-center lg:justify-start gap-2 pt-1 text-xs text-slate-500 font-medium">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span>{isTe ? "రాష్ట్రవ్యాప్త 33 జిల్లాలు & 589 మండలాలు కవరేజ్ • 100% ఉచిత ప్రజా సేవ" : "Covering all 33 Districts & 589 Mandals • 100% Free Public Service"}</span>
             </div>
           </div>
 

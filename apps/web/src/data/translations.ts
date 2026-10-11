@@ -78,20 +78,20 @@ export const translations = {
     en: "Official digital network of Nayi Samakhya Telangana — 33 districts & 589 mandals",
   },
   heroEyebrow: {
-    te: "చట్టబద్ధ రక్షణ • సంక్షేమ సాధికారత",
-    en: "Legal Protection • Welfare Empowerment",
+    te: "తెలంగాణ రాష్ట్ర స్థాయి అధికారిక వేదిక • 33 జిల్లాలు & 589 మండలాలు",
+    en: "Official State Civic Platform • 33 Districts & 589 Mandals",
   },
   heroH1Primary: {
-    te: "ఆత్మగౌరవం • చట్టబద్ధ రక్షణ • సాధికారత",
-    en: "Self-Respect • Empowerment • Progress",
+    te: "ఆత్మగౌరవం · చట్టబద్ధ హక్కులు",
+    en: "Dignity, Legal Protection &",
   },
   heroH1Secondary: {
-    te: "ఆధునిక వికాసం",
-    en: "Modern Progress",
+    te: "వృత్తి సంక్షేమ సాధికారత",
+    en: "Community Welfare Empowerment",
   },
   heroMissionLead: {
-    te: "నాయీ-బ్రాహ్మణ సమాజం యొక్క చారిత్రక గౌరవాన్ని పునరుద్ధరించి — గుర్తింపు పొందిన వెల్నెస్ నిపుణులుగా, పవిత్ర సంగీత సంరక్షకులుగా, ఆర్థికంగా స్వతంత్ర వ్యాపారులుగా సాధికారత కల్పించి, తెలంగాణ అభివృద్ధిలో సమాన, స్వావలంబన భాగస్వాములుగా నిలబెట్టడమే మా లక్ష్యం.",
-    en: "To reclaim the historical dignity of the Nayi-Brahmin community, empowering them as recognized wellness experts, custodians of sacred music, and economically independent entrepreneurs, standing as equal and self-reliant stakeholders in Telangana's development.",
+    te: "తెలంగాణవ్యాప్తంగా నాయీ బ్రాహ్మణ, మంగలి & భజంత్రి వృత్తి కళాకారుల హక్కుల పరిరక్షణ — జీవో నం. 23 ద్వారా 250 యూనిట్ల ఉచిత విద్యుత్, చట్టబద్ధ వినతిపత్రాలు మరియు సమగ్ర సంక్షేమ సేవల అధికారిక వేదిక.",
+    en: "The official civic empowerment platform for Telangana's Nayi-Brahmin, Mangali & Bajantri communities — securing 250 units of free electricity under G.O. 23, statutory legal petitions, and field-level welfare rights.",
   },
   heroMissionPillars: {
     te: "నాయీ సమాఖ్య తెలంగాణ మూడు స్తంభాల మిషన్‌పై నిర్మితమైంది: సాంస్కృతిక పునరుద్ధరణ, రాజ్యాంగ సాధికారత, ఆర్థిక రూపాంతరం.",
