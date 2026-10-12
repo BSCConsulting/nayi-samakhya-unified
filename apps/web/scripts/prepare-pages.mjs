@@ -142,4 +142,87 @@ function cleanSegments(dir) {
 }
 cleanSegments(nextDir);
 
+// 7. Rigorous Cloudflare Pages Pre-Flight Verification & Guardrails
+function auditDirectory(dir) {
+  let fileCount = 0;
+  let maxFileSize = 0;
+  let maxFile = "";
+
+  function traverse(currentDir) {
+    if (!fs.existsSync(currentDir)) return;
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        traverse(fullPath);
+      } else if (entry.isFile()) {
+        fileCount++;
+        const stat = fs.statSync(fullPath);
+        if (stat.size > maxFileSize) {
+          maxFileSize = stat.size;
+          maxFile = fullPath;
+        }
+      }
+    }
+  }
+
+  traverse(dir);
+  return { fileCount, maxFileSize, maxFile };
+}
+
+const audit = auditDirectory(nextDir);
+const maxFileMb = (audit.maxFileSize / (1024 * 1024)).toFixed(2);
+console.log(`\n========================================`);
+console.log(`Cloudflare Pages Pre-Flight Health Audit`);
+console.log(`========================================`);
+console.log(`Total Published Files : ${audit.fileCount} / 20,000 max (${((audit.fileCount / 20000) * 100).toFixed(1)}% of limit)`);
+console.log(`Largest Asset File    : ${path.basename(audit.maxFile)} (${maxFileMb} MiB / 25 MiB max)`);
+
+if (audit.fileCount >= 18000) {
+  throw new Error(`CRITICAL GUARDRAIL VIOLATION: Output file count (${audit.fileCount}) approaches or exceeds Cloudflare 20,000 file limit!`);
+}
+
+if (audit.maxFileSize > 25 * 1024 * 1024) {
+  throw new Error(`CRITICAL GUARDRAIL VIOLATION: Asset ${audit.maxFile} (${maxFileMb} MiB) exceeds Cloudflare 25 MiB file size limit!`);
+}
+
+// Check critical routes
+const criticalRoutes = [
+  "index.html",
+  "representation/index.html",
+  "feed/index.html",
+  "survey/index.html",
+  "grievance/index.html",
+  "mandals/index.html",
+  "districts/index.html",
+  "welfare/salon-schemes/index.html",
+  "matrimony/index.html",
+  "matrimony/kalyana-lakshmi/index.html",
+  "sprint/index.html",
+  "quiz/index.html",
+  "reels/index.html",
+  "twa/index.html",
+  "poster/index.html",
+  "coordinator-card/index.html",
+  "salon-hub/index.html",
+  "history/index.html",
+  "404.html",
+];
+
+const missingRoutes = [];
+for (const r of criticalRoutes) {
+  if (!fs.existsSync(path.join(nextDir, r))) {
+    missingRoutes.push(r);
+  }
+}
+
+if (missingRoutes.length > 0) {
+  console.error("Missing critical routes in .next output:", missingRoutes);
+  throw new Error(`CRITICAL GUARDRAIL VIOLATION: ${missingRoutes.length} critical route(s) failed to generate: ${missingRoutes.join(", ")}`);
+}
+
+console.log(`Verified ${criticalRoutes.length} critical public routes are 100% present in static export.`);
+console.log(`========================================\n`);
+
 console.log("Cloudflare Pages preparation completed successfully.");
+
