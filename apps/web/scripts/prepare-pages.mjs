@@ -110,11 +110,36 @@ function mirrorHtmlRoutes(dir, base = "") {
 mirrorHtmlRoutes(nextDir);
 console.log("Completed HTML route mirroring for Cloudflare Pages.");
 
-// 6. Clean up large caches to guarantee < 25 MiB compliance
-for (const dirToClean of [path.join(nextDir, "cache"), path.join(nextDir, "dev")]) {
+// 6. Clean up server, cache, dev, and internal build artifacts to guarantee strict < 20,000 file limit and < 25 MiB compliance on Cloudflare Pages
+const dirsToRemove = [
+  path.join(nextDir, "server"),
+  path.join(nextDir, "cache"),
+  path.join(nextDir, "dev"),
+  path.join(nextDir, "types"),
+];
+
+for (const dirToClean of dirsToRemove) {
   if (fs.existsSync(dirToClean)) {
     fs.rmSync(dirToClean, { recursive: true, force: true });
+    console.log(`Cleaned build directory: ${path.basename(dirToClean)}`);
   }
 }
+
+// Clean up .segments folders generated during App Router compilation
+function cleanSegments(dir) {
+  if (!fs.existsSync(dir)) return;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name.endsWith(".segments")) {
+        fs.rmSync(fullPath, { recursive: true, force: true });
+      } else {
+        cleanSegments(fullPath);
+      }
+    }
+  }
+}
+cleanSegments(nextDir);
 
 console.log("Cloudflare Pages preparation completed successfully.");
